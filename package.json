@@ -4,7 +4,7 @@
   "description": "Software for create cli-programs",
   "main": "index.js",
   "scripts": {
-    "start": "supervisor server"
+    "start": "node server"
   },
   "repository": {
     "type": "git",
