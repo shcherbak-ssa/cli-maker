@@ -1,8 +1,11 @@
 'use strict';
 
+const AppServer = require('../server');
+
 class AppLauncher {
-  initApplication() {
-    console.log('app-launcher');
+  initApplication(config) {
+    const appServer = new AppServer(config);
+    appServer.run();
   }
 }
 
