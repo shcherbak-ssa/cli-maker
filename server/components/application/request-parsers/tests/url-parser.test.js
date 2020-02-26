@@ -1,31 +1,23 @@
 'use strict';
 
 const assert = require('assert');
-const urlParser = {
-  parse(url) {
-    return {path: ''};
-  }
-};
+const urlParser = require('../url-parser');
 
-describe('URLParser class test', () => {
-  it('parse url = \'/\'', () => {
-    const url = '/';
-    const parsedURL = urlParser.parse(url);
-    
-    assert.equal(parsedURL.path, '/');
-  });
+describe('test URLParser class', () => {
+  describe('test path value', () => {
+    const testData = [
+      { test: '/', expect: '/' },
+      { test: '/filename.js', expect: '/filename.js' },
+      { test: '/dirname/filename.js', expect: '/dirname/filename.js' }
+    ]
 
-  it('parse url = \'/filename.js\'', () => {
-    const url = '/filename.js';
-    const parsedURL = urlParser.parse(url);
-    
-    assert.equal(parsedURL.path, '/filename.js');
-  });
-
-  it('parse url = \'/dirname/filename.js\'', () => {
-    const url = '/dirname/filename.js';
-    const parsedURL = urlParser.parse(url);
-    
-    assert.equal(parsedURL.path, '/dirname/filename.js');
-  });
+    testData.map((testItem) => {
+      it(`parse url = \'${testItem.test}\'`, () => {
+        const url = testItem.test;
+        const parsedURL = urlParser.parse(url);
+        
+        assert.equal(parsedURL.path, testItem.expect);
+      });
+    })
+  })
 });
