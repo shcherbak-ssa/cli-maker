@@ -4,15 +4,10 @@ const usersCreator = {
   remove(connectionID) {},
   create() { return '123' }
 };
-const responseCreator = {
-  createResponse(url) {
-    return {};
-  }
-};
-
+const responseCreator = require('../app-response/response-creator');
 const cookieParser = require('../request-parsers/cookie-parser');
 
-class RootRequestWorker {
+class RootRequest {
   ROOT_PATHNAME = '/';
 
   isRootRequest(pathname) {
@@ -39,4 +34,5 @@ class RootRequestWorker {
   }
 }
 
-module.exports = RootRequestWorker;
+const rootRequest = new RootRequest();
+module.exports = rootRequest;

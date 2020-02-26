@@ -4,11 +4,20 @@ const FS = require('fs');
 
 class ResponseSender {
   async send(getResponse, response) {
+    try {
+      await this._tryToSend(getResponse, response);
+    } catch(error) {
+      console.log('send file error: ', error);
+      response('Fuck!');
+    }
+  }
+
+  async _tryToSend(getResponse, response) {
     const {code, headers, filename} = getResponse;
+    console.log('code', code);
     response.writeHead(code, headers);
     await this._sendFiledata(filename, response);
   }
-
   async _sendFiledata(filename, response) {
     const readStream = new FS.createReadStream(filename);
     readStream.on('readable', () => {
@@ -25,4 +34,5 @@ class ResponseSender {
   }
 }
 
-module.exports = ResponseSender;
+const responseSender = new ResponseSender();
+module.exports = responseSender;

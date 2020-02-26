@@ -3,9 +3,9 @@
 const FS = require('fs');
 const PATH = require('path');
 
-class ResponseCreator {
-  PUBLIC_PATH = PATH.join(process.cwd(), 'public');
+const PUBLIC_PATH = PATH.join(process.cwd(), 'public');
 
+class ResponseCreator {
   isValid(pathname) {
     const filename = this._createFilename(pathname);
     return FS.existsSync(filename);
@@ -23,6 +23,9 @@ class ResponseCreator {
   }
 
   _createFilename(pathname) {
-    return PATH.join(this.PUBLIC_PATH, pathname)
+    return PATH.join(PUBLIC_PATH, pathname)
   }
 }
+
+const responseCreator = new ResponseCreator();
+module.exports = responseCreator;

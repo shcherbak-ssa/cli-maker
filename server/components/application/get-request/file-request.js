@@ -1,24 +1,20 @@
 'use strict';
 
-const responseCreator = {
-  isValid(url) {
-    return true;
-  },
-  createResponse(url) {
-    return {};
-  },
-  createErrorResponse(code) {
-    return {};
-  }
-};
+const responseCreator = require('../app-response/response-creator');
 
 class FileRequest {
   INVALID_URL_PATHNAME_CODE = 404;
 
   async run(parsedURL) {
     const pathname = parsedURL.getPathname();
-    return responseCreator.isValid(pathname)
+    const isValidPathname = responseCreator.isValid(pathname);
+    const getResponse = isValidPathname
      ? responseCreator.createResponse(pathname)
      : responseCreator.createErrorResponse(this.INVALID_URL_PATHNAME_CODE);
+
+    return getResponse;
   }
 }
+
+const fileRequest = new FileRequest();
+module.exports = fileRequest;

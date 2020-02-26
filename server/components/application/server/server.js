@@ -1,11 +1,9 @@
 'use strict';
 
 const HTTP = require('http');
-const GetRequest = require('../get-request');
+const getRequest = require('../get-request');
 
 class AppServer {
-  _getRequest = new GetRequest();
-
   constructor({port, host}) {
     this.port = port;
     this.host = host;
@@ -37,7 +35,7 @@ class AppServer {
     const {method} = request;
     switch( method ) {
       case 'GET':
-        return await this._getRequestWorker.run(request, response);
+        return await getRequest.run(request, response);
       case 'POST':
         console.log('it is POST method');
         break;

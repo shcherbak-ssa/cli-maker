@@ -1,15 +1,21 @@
 'use strict';
 
+const rootRequest = require('./root-request');
+const fileRequest = require('./file-request');
+const responseSender = require('../app-response/response-sender');
 const urlParser = require('../request-parsers/url-parser');
-const cookieParser = require('../request-parsers/cookie-parser');
 
 class GetRequest {
   async run(request, response) {
     const parsedURL = urlParser.parse(request.url);
-    console.log('cookie: ', request.headers.cookie);
-    console.log('pathname: ', parsedURL.getPathname());
-    response.end('Hello, I am CLI Maker!');
+    const isRootRequest = rootRequest.isRootRequest(parsedURL.getPathname());
+    const getResponse = isRootRequest
+      ? await rootRequest.run(parsedURL, request)
+      : await fileRequest.run(parsedURL);
+
+    responseSender.send(getResponse, response);
   }
 }
 
-module.exports = GetRequest;
+const getRequest = new GetRequest();
+module.exports = getRequest;
