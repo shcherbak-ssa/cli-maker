@@ -2,6 +2,7 @@
   "name": "cli-maker-server",
   "version": "1.0.0",
   "scripts": {
-    "test-url-parser": "mocha components/application/request-parsers/tests/url-parser.test.js"
+    "test-url-parser": "mocha components/application/request-parsers/tests/url-parser.test.js",
+    "test-cookie-parser": "mocha components/application/request-parsers/tests/cookie-parser.test.js"
   }
 }
