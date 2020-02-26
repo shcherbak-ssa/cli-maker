@@ -1,36 +1,36 @@
 'use strict';
 
 class ParsedURLData {
-  path = '';
+  pathname = '';
   params = new Map();
 }
 
 class ParsedURL {
   constructor(parsedURLData) {
-    this.data = parsedURLData;
+    this._data = parsedURLData;
   }
 
-  getPath() {
-    return this.data.path;
+  getPathname() {
+    return this._data.pathname;
   }
   getParamItem(key) {
-    return this.data.params.get(key);
+    return this._data.params.get(key);
   }
 }
 
 class ParsedURLCreator {
   constructor() {
-    this.data = new ParsedURLData();
+    this._data = new ParsedURLData();
   }
 
-  setPath(path) {
-    this.data.path = path;
+  setPathname(pathname) {
+    this._data.pathname = pathname;
   }
   setParams(params) {
-    this.data.params = params;
+    this._data.params = params;
   }
   getParsedURL() {
-    return this.data;
+    return new ParsedURL(this._data);
   }
 }
 
