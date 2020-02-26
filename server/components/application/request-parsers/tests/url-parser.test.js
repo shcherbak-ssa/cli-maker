@@ -10,5 +10,5 @@ describe('URLParser class test', () => {
     url += '1';
 
     assert.equal(url, '/1');
-  })
-})
+  });
+});
