@@ -2,14 +2,14 @@
 
 class CookieParser {
   getConnectionID(headers) {
+    if( headers.cookie === undefined ) return '';
+
     const cookie = this._getCookie(headers);
     return (cookie === '') ? '' : this._getConnecionID(cookie);
   }
 
   _getCookie(headers) {
-    let cookie = headers.cookie || '';
-    if( cookie === '' ) return '';
-
+    let cookie = headers.cookie;
     cookie = cookie.split(';').map((item) => item.split('='));
     return new Map(cookie);
   }

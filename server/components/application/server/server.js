@@ -1,8 +1,11 @@
 'use strict';
 
 const HTTP = require('http');
+const GetRequestWorker = require('../get-request');
 
 class AppServer {
+  _getRequestWorker = new GetRequestWorker();
+
   constructor({port, host}) {
     this.port = port;
     this.host = host;
@@ -18,23 +21,27 @@ class AppServer {
 
   _tryToRunServer() {
     const httpServer = new HTTP.Server();
-    httpServer.on('request', this._requestHandler);
+    httpServer.on('request', this._requestHandler.bind(this));
     httpServer.listen(this.port, this.host, () => {
       console.log(`Server run on url: http://${this.host}:${this.port}/`);
     });
   }
-  _requestHandler(request, response) {
+  async _requestHandler(request, response) {
+    try {
+      await this._parseRequest(request, response);
+    } catch (error) {
+      console.log('parse request error: ', error);
+    }
+  }
+  async _parseRequest(request, response) {
     const {method} = request;
     switch( method ) {
       case 'GET':
-        console.log('it is GET method');
-        break;
+        return await this._getRequestWorker.run(request, response);
       case 'POST':
         console.log('it is POST method');
         break;
     }
-
-    response.end('Hello, I am CLI Maker!');
   }
 }
 
