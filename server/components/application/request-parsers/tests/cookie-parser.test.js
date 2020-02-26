@@ -1,7 +1,7 @@
 'use strict';
 
 const assert = require('assert');
-const cookieParser = {};
+const cookieParser = require('../cookie-parser');
 
 describe('CookieParser class test', () => {
   it('empty cookie', () => {
