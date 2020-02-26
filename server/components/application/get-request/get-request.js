@@ -3,7 +3,7 @@
 const urlParser = require('../request-parsers/url-parser');
 const cookieParser = require('../request-parsers/cookie-parser');
 
-class GetRequestWorker {
+class GetRequest {
   async run(request, response) {
     const parsedURL = urlParser.parse(request.url);
     console.log('cookie: ', request.headers.cookie);
@@ -12,4 +12,4 @@ class GetRequestWorker {
   }
 }
 
-module.exports = GetRequestWorker;
+module.exports = GetRequest;
