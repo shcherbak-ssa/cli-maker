@@ -16,7 +16,23 @@ describe('test URLParser class', () => {
         const url = testItem.test;
         const parsedURL = urlParser.parse(url);
         
-        assert.equal(parsedURL.path, testItem.expect);
+        assert.equal(parsedURL.getPath(), testItem.expect);
+      });
+    })
+  })
+
+  describe('test params value', () => {
+    const testData = [
+      { test: '/?id=1234567890', expect: {key: 'id', value: '1234567890'} }
+    ]
+
+    testData.map((testItem) => {
+      it(`parse url = \'${testItem.test}\'`, () => {
+        const url = testItem.test;
+        const parsedURL = urlParser.parse(url);
+        
+        const {expect} = testItem;
+        assert.equal(parsedURL.getParamItem(expect.key), expect.value);
       });
     })
   })
