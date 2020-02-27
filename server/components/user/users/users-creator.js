@@ -1,6 +1,6 @@
 'use strict';
 
-const users = {};
+const users = require('./users');
 const connectionIDs = require('./connections-ids');
 
 class UsersCreator {
