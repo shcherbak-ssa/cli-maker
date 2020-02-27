@@ -7,30 +7,30 @@ class ParsedRequestData {
 
 class ParsedRequest {
   constructor(parsedRequestData) {
-    this.data = parsedRequestData;
+    this._data = parsedRequestData;
   }
 
   getAccessID() {
-    return this.data.accessID;
+    return this._data.accessID;
   }
   getData() {
-    return this.data.data;
+    return this._data.data;
   }
 }
 
 class ParsedRequestCreator {
   constructor() {
-    this.data = new ParsedRequestData();
+    this._data = new ParsedRequestData();
   }
 
   setAccessID(accessID) {
-    this.data.accessID = accessID;
+    this._data.accessID = accessID;
   }
   setData(data) {
-    this.data.data = data;
+    this._data.data = data;
   }
   getParsedRequest() {
-    return this.data;
+    return new ParsedRequest(this._data);
   }
 }
 
