@@ -1,7 +1,7 @@
 'use strict';
 
 const HTTP = require('http');
-const getRequest = require('../get-request');
+const getRequest = require('./get-request');
 
 class AppServer {
   constructor({port, host}) {
