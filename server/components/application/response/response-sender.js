@@ -3,19 +3,22 @@
 const FS = require('fs');
 
 class ResponseSender {
-  async send(getResponse, response) {
+  async send(responseObject, response) {
     try {
-      await this._tryToSend(getResponse, response);
+      await this._tryToSend(responseObject, response);
     } catch(error) {
       console.log('send file error: ', error);
       response('Fuck!');
     }
   }
 
-  async _tryToSend(getResponse, response) {
-    const {code, headers, filename} = getResponse;
+  async _tryToSend(responseObject, response) {
+    const code = responseObject.getCode();
+    const message = responseObject.getMessage();
+    const headers = responseObject.getHeaders();
+    const filename = responseObject.getFilename();
     
-    response.writeHead(code, headers);
+    response.writeHead(code, message, headers);
     await this._sendFiledata(filename, response);
   }
   async _sendFiledata(filename, response) {

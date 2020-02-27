@@ -1,18 +1,17 @@
 'use strict';
 
 const responseCreator = require('../response/response-creator');
+const {NotFoundError} = require('../errors/request-errors');
 
 class FileRequest {
   INVALID_URL_PATHNAME_CODE = 404;
 
   async run(parsedURL) {
     const pathname = parsedURL.getPathname();
-    const isValidPathname = responseCreator.isValid(pathname);
-    const getResponse = isValidPathname
-     ? responseCreator.createResponse(pathname)
-     : responseCreator.createErrorResponse(this.INVALID_URL_PATHNAME_CODE);
+    if( responseCreator.isValid(pathname) )
+      return responseCreator.createResponse(pathname)
 
-    return getResponse;
+    throw new NotFoundError(`file ${pathname} did not find`);
   }
 }
 

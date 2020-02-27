@@ -2,14 +2,16 @@
 
 const {join} = require('path');
 const getFileExtension = require('./file-extension');
+const {BadRequestError} = require('../../errors/request-errors');
 
 const PUBLIC_PATH = join(process.cwd(), 'public');
 
-class FilepathCreator {
-  create(pathname) {
+class FilenameCreator {
+  createFilename(pathname) {
     const fileExtension = getFileExtension(pathname);
-    const filepathCreator = this._getCreatorByFileExtension(fileExtension);
-    return filepathCreator(pathname);
+    const filenameCreator = this._getCreatorByFileExtension(fileExtension);
+
+    return filenameCreator(pathname);
   }
 
   _getCreatorByFileExtension(fileExtension) {
@@ -18,11 +20,13 @@ class FilepathCreator {
         return this._createHTMLFilepath;
       case '.ico':
         return this._createImageFilepath;
+      default:
+        throw new BadRequestError(`file extension ${fileExtension} is invalid`);
     }
   }
 
   _createHTMLFilepath(pathname) {
-    return join(PUBLIC_PATH, pathname);
+    return join(PUBLIC_PATH, 'html', pathname);
   }
   _createJSFilepath(pathname) {
     const splitPathname = pathname.split('/');
@@ -33,5 +37,5 @@ class FilepathCreator {
   }
 }
 
-const filepathCreator = new FilepathCreator();
-module.exports = filepathCreator;
+const filenameCreator = new FilenameCreator();
+module.exports = filenameCreator;

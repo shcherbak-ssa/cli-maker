@@ -1,17 +1,15 @@
 'use strict';
 
-const usersCreator = {
-  remove(connectionID) {},
-  create() { return '123' }
-};
+const usersCreator = require('../../user/users/users-creator');
 const responseCreator = require('../response/response-creator');
 const cookieParser = require('../request-parsers/cookie-parser');
 
-class RootRequest {
-  ROOT_PATHNAME = '/';
+const ROOT_PATHNAME = '/';
+const ROOT_FILENAME = 'index.html';
 
+class RootRequest {
   isRootRequest(pathname) {
-    return pathname === this.ROOT_PATHNAME;
+    return pathname === ROOT_PATHNAME;
   }
   async run(parsedURL, request) {
     if( parsedURL.getParamItem('remove') === '' ) {
@@ -19,14 +17,15 @@ class RootRequest {
       return null;
     }
 
-    const getResponse = this._createUser();
-    return getResponse;
+    const responseObject = await this._createUser();
+    return responseObject;
   }
   
   async _createUser() {
     const connectionID = usersCreator.create();
-    const getResponse = responseCreator.createResponse(this.ROOT_PATHNAME);
-    return getResponse;
+    const responseObject = await responseCreator.createResponse(ROOT_FILENAME);
+    responseObject.setHeader('Set-Cookie', `connectionID=${connectionID}`);
+    return responseObject;
   }
   async _removeUser({headers}) {
     const connectionID = cookieParser.getConnectionID(headers);
