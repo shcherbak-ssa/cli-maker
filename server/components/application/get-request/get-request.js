@@ -2,7 +2,7 @@
 
 const rootRequest = require('./root-request');
 const fileRequest = require('./file-request');
-const responseSender = require('../app-response/response-sender');
+const responseSender = require('../response/response-sender');
 const urlParser = require('../request-parsers/url-parser');
 
 class GetRequest {

@@ -1,6 +1,6 @@
 'use strict';
 
-const responseCreator = require('../app-response/response-creator');
+const responseCreator = require('../response/response-creator');
 
 class FileRequest {
   INVALID_URL_PATHNAME_CODE = 404;

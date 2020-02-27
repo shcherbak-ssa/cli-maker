@@ -4,7 +4,7 @@ const usersCreator = {
   remove(connectionID) {},
   create() { return '123' }
 };
-const responseCreator = require('../app-response/response-creator');
+const responseCreator = require('../response/response-creator');
 const cookieParser = require('../request-parsers/cookie-parser');
 
 class RootRequest {
