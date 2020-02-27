@@ -1,6 +1,6 @@
 'use strict';
 
-const CurrentUser = {};
+const CurrentUser = require('../current-user');
 
 class Users {
   _users = new Map();
