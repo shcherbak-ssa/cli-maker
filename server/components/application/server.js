@@ -2,6 +2,7 @@
 
 const HTTP = require('http');
 const getRequest = require('./get-request');
+const postRequest = require('./post-request');
 
 class AppServer {
   constructor({port, host}) {
@@ -37,8 +38,9 @@ class AppServer {
       case 'GET':
         return await getRequest.run(request, response);
       case 'POST':
-        console.log('it is POST method');
-        break;
+        return await postRequest.run(request, response);
+      default:
+        /** @TODO: neew to add MethodNotAllowed exception */
     }
   }
 }
