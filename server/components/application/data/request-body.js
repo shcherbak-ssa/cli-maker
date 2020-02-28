@@ -1,13 +1,13 @@
 'use strict';
 
-class ParsedRequestData {
+class RequestBodyData {
   accessID = '';
   data = {};
 }
 
-class ParsedRequest {
-  constructor(parsedRequestData) {
-    this._data = parsedRequestData;
+class RequestBody {
+  constructor(requestBodyData) {
+    this._data = requestBodyData;
   }
 
   getAccessID() {
@@ -18,9 +18,9 @@ class ParsedRequest {
   }
 }
 
-class ParsedRequestCreator {
+class RequestBodyCreator {
   constructor() {
-    this._data = new ParsedRequestData();
+    this._data = new RequestBodyData();
   }
 
   setAccessID(accessID) {
@@ -29,9 +29,9 @@ class ParsedRequestCreator {
   setData(data) {
     this._data.data = data
   }
-  getParsedRequest() {
-    return new ParsedRequest(this._data);
+  getRequestBody() {
+    return new RequestBody(this._data);
   }
 }
 
-module.exports = ParsedRequestCreator;
+module.exports = RequestBodyCreator;

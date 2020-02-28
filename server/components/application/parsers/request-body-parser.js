@@ -1,9 +1,9 @@
 'use strict';
 
 const formidable = require('formidable');
-const ParsedRequestCreator = require('../data/parsed-request');
+const RequestBodyCreator = require('../data/request-body');
 
-class RequestParser {
+class RequestBodyParser {
   async parse(request) {
     try {
       return await this._tryToParse(request);
@@ -15,11 +15,11 @@ class RequestParser {
   async _tryToParse(request) {
     const {fields} = await this._getData(request);
     const {accessID, data} = fields;
-    const parsedRequestCreator = new ParsedRequestCreator();
+    const requestBodyCreator = new RequestBodyCreator();
     
-    parsedRequestCreator.setAccessID(accessID);
-    parsedRequestCreator.setData(data);
-    return parsedRequestCreator.getParsedRequest();
+    requestBodyCreator.setAccessID(accessID);
+    requestBodyCreator.setData(data);
+    return requestBodyCreator.getRequestBody();
   }
   async _getData(request) {
     return new Promise((success, error) => {
@@ -32,5 +32,5 @@ class RequestParser {
   }
 }
 
-const requestParser = new RequestParser();
-module.exports = requestParser;
+const requestBodyParser = new RequestBodyParser();
+module.exports = requestBodyParser;

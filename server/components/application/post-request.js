@@ -1,7 +1,7 @@
 'use strict';
 
 const cookieParser = require('./parsers/cookie-parser');
-const requestParser = require('./parsers/request-parser');
+const requestBodyParser = require('./parsers/request-body-parser');
 
 const usersController = require('../user/users/users-controller');
 const appEventsEmitter = require('./data/app-events-emitter');
@@ -22,7 +22,7 @@ class PostRequest {
 
     if(isValidUser) {
       const event = request.url.slice(1);
-      const parsedRequest = await requestParser.parse(request);
+      const requestBody = await requestBodyParser.parse(request);
       response.end();
       //appEventsEmitter.emit(event, parsedRequest, response);
     }
