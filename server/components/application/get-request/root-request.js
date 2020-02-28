@@ -11,14 +11,8 @@ class RootRequest {
   isRootRequest(pathname) {
     return pathname === ROOT_PATHNAME;
   }
-  async run(parsedURL, request) {
-    if( parsedURL.getParamItem('remove') === '' ) {
-      await this._removeUser(request);
-      return null;
-    }
-
-    const responseObject = await this._createUser();
-    return responseObject;
+  async run() {
+    return await this._createUser();
   }
   
   async _createUser() {

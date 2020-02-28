@@ -2,6 +2,9 @@
   ".html": {
     "Content-Type": "text/html"
   },
+  ".js": {
+    "Content-Type": "application/javascript"
+  },
   ".ico": {
     "Content-Type": "image/x-icon"
   }

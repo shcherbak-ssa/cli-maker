@@ -2,7 +2,7 @@
 
 class ParsedRequestData {
   accessID = '';
-  data = new Map();
+  data = {};
 }
 
 class ParsedRequest {
@@ -27,7 +27,7 @@ class ParsedRequestCreator {
     this._data.accessID = accessID;
   }
   setData(data) {
-    this._data.data = data;
+    this._data.data = data
   }
   getParsedRequest() {
     return new ParsedRequest(this._data);

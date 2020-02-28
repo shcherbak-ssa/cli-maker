@@ -20,6 +20,8 @@ class FilenameCreator {
         return this._createHTMLFilepath;
       case '.ico':
         return this._createImageFilepath;
+      case '.js':
+        return this._createJSFilepath;
       default:
         throw new BadRequestError(`file extension ${fileExtension} is invalid`);
     }
