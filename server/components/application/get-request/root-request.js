@@ -2,7 +2,7 @@
 
 const usersCreator = require('../../user/users/users-creator');
 const responseCreator = require('../response/response-creator');
-const cookieParser = require('../request-parsers/cookie-parser');
+const cookieParser = require('../parsers/cookie-parser');
 
 const ROOT_PATHNAME = '/';
 const ROOT_FILENAME = 'index.html';

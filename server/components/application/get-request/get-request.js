@@ -5,7 +5,7 @@ const fileRequest = require('./file-request');
 
 const responseCreator = require('../response/response-creator');
 const responseSender = require('../response/response-sender');
-const urlParser = require('../request-parsers/url-parser');
+const urlParser = require('../parsers/url-parser');
 
 class GetRequest {
   async run(request, response) {
