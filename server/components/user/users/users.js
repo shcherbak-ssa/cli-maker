@@ -11,9 +11,11 @@ class Users {
   addUser(connectionID) {
     const currentUser = new CurrentUser(connectionID);
     this._users.set(connectionID, currentUser);
+    console.log('added user: ', connectionID);
   }
   removeUser(connectionID) {
     this._users.delete(connectionID);
+    console.log('removed user: ', connectionID);
   }
 }
 
