@@ -1,6 +1,6 @@
 'use strict';
 
-const AppServer = require('./server');
+const AppServer = require('./components/application/server');
 
 class AppLauncher {
   initApplication(config) {

@@ -1,11 +1,11 @@
 'use strict';
 
-const rootRequest = require('./root-request');
-const fileRequest = require('./file-request');
-
+const usersCreator = require('../user/users/users-creator');
 const responseCreator = require('../response/response-creator');
 const responseSender = require('../response/response-sender');
 const urlParser = require('../parsers/url-parser');
+
+const ROOT_PATHNAME = '/';
 
 class GetRequest {
   async run(request, response) {
@@ -33,6 +33,22 @@ class GetRequest {
     return rootRequest.isRootRequest(pathname)
       ? await rootRequest.run()
       : await fileRequest.run(parsedURL);
+  }
+
+  _isRootRequest(pathname) {
+    return pathname === ROOT_PATHNAME;
+  }
+  async _getResponseObjectForRootRequest() {
+    const connectionID = await usersCreator.create();
+    const responseObject = await this._getResponseObjectForFileRequest(ROOT_PATHNAME);
+    responseObject.setHeader('Set-Cookie', `connectionID=${connectionID}`);
+    return responseObject;
+  }
+  async _getResponseObjectForFileRequest(pathname) {
+    if( responseCreator.isValid(pathname) )
+      return responseCreator.createResponse(pathname)
+
+    throw new NotFoundError(`file ${pathname} did not find`);
   }
 }
 

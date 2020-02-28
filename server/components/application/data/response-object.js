@@ -1,7 +1,7 @@
 'use strict';
 
 class ResponseObjectData {
-  code = 0;
+  statusCode = 0;
   message = '';
   headers = {};
   filename = '';
@@ -12,20 +12,15 @@ class ResponseObject {
     this._data = responseObjectData;
   }
 
-  getCode() {
-    return this._data.code;
-  }
-  getMessage() {
-    return this._data.message;
-  }
-  getHeaders() {
-    return this._data.headers;
+  getHead() {
+    return [
+      this._data.statusCode,
+      this._data.message,
+      this._data.headers
+    ]
   }
   getFilename() {
     return this._data.filename;
-  }
-  setHeader(key, value) {
-    this._data.headers[key] = value;
   }
 }
 
@@ -34,8 +29,8 @@ class ResponseObjectCreator {
     this._data = new ResponseObjectData();
   }
 
-  setCode(code) {
-    this._data.code = code;
+  setStatusCode(statusCode) {
+    this._data.statusCode = statusCode;
   }
   setMessage(message) {
     this._data.message = message;

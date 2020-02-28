@@ -13,14 +13,10 @@ class ResponseSender {
   }
 
   async _tryToSend(responseObject, response) {
-    const code = responseObject.getCode();
-    const message = responseObject.getMessage();
-    const headers = responseObject.getHeaders();
-    const filename = responseObject.getFilename();
-    
-    response.writeHead(code, message, headers);
-    if( filename === null ) return response.end();
+    const head = responseObject.getHead();
+    response.writeHead(...head);
 
+    if( filename === null ) return response.end();
     await this._sendFiledata(filename, response);
   }
   async _sendFiledata(filename, response) {
