@@ -14,13 +14,12 @@ class GetRequest {
     try {
       responseObject = await this._tryToRun(request);  
     } catch (error) {
-      if( error.name !== 'RequestError' ) {
+      if( error.name === 'RequestError' ) {
+        console.log('get-request: ', error.message);
+        responseObject = await responseCreator.createErrorResponse(error.errorData);
+      } else {
         console.log(error);
-        process.exit(1);
       }
-
-      console.log('get-request: ', error.message);
-      responseObject = await responseCreator.createErrorResponse(error.statusCode);
     } finally {
       if( responseObject === null ) return response.end();
       await responseSender.send(responseObject, response);
@@ -32,7 +31,7 @@ class GetRequest {
     const pathname = parsedURL.getPathname();
 
     return rootRequest.isRootRequest(pathname)
-      ? await rootRequest.run(parsedURL, request)
+      ? await rootRequest.run()
       : await fileRequest.run(parsedURL);
   }
 }

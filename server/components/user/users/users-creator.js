@@ -4,12 +4,13 @@ const users = require('./users');
 const connectionIDs = require('./connections-ids');
 
 class UsersCreator {
-  create() {
+  async create() {
     const connectionID = connectionIDs.createConnectionID();
     users.addUser(connectionID);
+    
     return connectionID;
   }
-  remove(connectionID) {
+  async remove(connectionID) {
     connectionIDs.removeConnectionID(connectionID);
     users.removeUser(connectionID);
   }

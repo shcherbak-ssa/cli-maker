@@ -18,8 +18,7 @@ class ResponseCreator {
   async createResponse(pathname) {
     return this._createResponseObject(pathname, SUCCESS_CODE);
   }
-  async createErrorResponse(statusCode) {
-    const pathname = `${statusCode}.html`;
+  async createErrorResponse({pathname, statusCode}) {
     return this._createResponseObject(pathname, statusCode);
   }
 
@@ -30,12 +29,16 @@ class ResponseCreator {
     const message = STATUS_CODES[statusCode];
     responseObjectCreator.setMessage(message);
 
-    const fileExtension = getFileExtension(pathname);
-    const headers = headersCreator.create(fileExtension);
-    responseObjectCreator.setHeaders(headers);
+    if( pathname === null ) {
+      responseObjectCreator.setFilename(null);
+    } else {
+      const fileExtension = getFileExtension(pathname);
+      const headers = headersCreator.create(fileExtension);
+      responseObjectCreator.setHeaders(headers);
 
-    const filepath = filenameCreator.createFilename(pathname);
-    responseObjectCreator.setFilename(filepath);
+      const filename = filenameCreator.createFilename(pathname);
+      responseObjectCreator.setFilename(filename);
+    }
 
     return responseObjectCreator.getResponseObject();
   }

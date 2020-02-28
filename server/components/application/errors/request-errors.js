@@ -8,15 +8,31 @@ class RequestError extends Error {
 }
 
 class NotFoundError extends RequestError {
-  statusCode = 404;
+  errorData = {
+    statusCode: 404,
+    pathname: '404.html'
+  };
   
   constructor(message) {
     super(message);
   }
 }
 class BadRequestError extends RequestError {
-  statusCode = 400;
+  errorData = {
+    statusCode: 400,
+    pathname: null
+  };
   
+  constructor(message) {
+    super(message);
+  }
+}
+class MethodNotAllowed extends RequestError {
+  errorData = {
+    statusCode: 405,
+    pathname: null
+  };
+
   constructor(message) {
     super(message);
   }
@@ -24,5 +40,6 @@ class BadRequestError extends RequestError {
 
 module.exports = {
   NotFoundError,
-  BadRequestError
+  BadRequestError,
+  MethodNotAllowed
 };

@@ -8,7 +8,7 @@ class ResponseSender {
       await this._tryToSend(responseObject, response);
     } catch(error) {
       console.log('send file error: ', error);
-      response('Fuck!');
+      response.end();
     }
   }
 
@@ -19,6 +19,8 @@ class ResponseSender {
     const filename = responseObject.getFilename();
     
     response.writeHead(code, message, headers);
+    if( filename === null ) return response.end();
+
     await this._sendFiledata(filename, response);
   }
   async _sendFiledata(filename, response) {
