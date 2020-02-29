@@ -2,7 +2,6 @@
 
 class ResponseObjectData {
   statusCode = 0;
-  message = '';
   headers = {};
   filename = '';
 }
@@ -12,12 +11,14 @@ class ResponseObject {
     this._data = responseObjectData;
   }
 
-  getHead() {
-    return [
-      this._data.statusCode,
-      this._data.message,
-      this._data.headers
-    ]
+  setHeader(key, value) {
+    this._data.headers[key] = value;
+  }
+  getStatusCode() {
+    return this._data.statusCode;
+  }
+  getHeaders() {
+    return this._data.headers;
   }
   getFilename() {
     return this._data.filename;
@@ -31,15 +32,15 @@ class ResponseObjectCreator {
 
   setStatusCode(statusCode) {
     this._data.statusCode = statusCode;
-  }
-  setMessage(message) {
-    this._data.message = message;
+    return this;
   }
   setHeaders(headers) {
     this._data.headers = headers;
+    return this;
   }
   setFilename(filename) {
     this._data.filename = filename;
+    return this;
   }
   getResponseObject() {
     return new ResponseObject(this._data)

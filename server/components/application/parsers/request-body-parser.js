@@ -5,14 +5,6 @@ const RequestBodyCreator = require('../data/request-body');
 
 class RequestBodyParser {
   async parse(request) {
-    try {
-      return await this._tryToParse(request);
-    } catch (error) {
-      console.log(error);
-    }
-  }
-
-  async _tryToParse(request) {
     const {fields} = await this._getData(request);
     const {accessID, data} = fields;
     const requestBodyCreator = new RequestBodyCreator();
@@ -21,6 +13,7 @@ class RequestBodyParser {
     requestBodyCreator.setData(data);
     return requestBodyCreator.getRequestBody();
   }
+
   async _getData(request) {
     return new Promise((success, error) => {
       const form = formidable();

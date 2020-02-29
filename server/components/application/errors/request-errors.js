@@ -1,5 +1,10 @@
 'use strict';
 
+const {join} = require('path');
+const PUBLIC_PATH = join(process.cwd(), 'public');
+
+const createErrorResponseObject = require('./src/create-error-response-object');
+
 class RequestError extends Error {
   constructor(message) {
     super(message);
@@ -8,30 +13,31 @@ class RequestError extends Error {
 }
 
 class NotFoundError extends RequestError {
-  errorData = {
+  responseObject = createErrorResponseObject({
     statusCode: 404,
-    pathname: '404.html'
-  };
+    headers: {
+      'Content-Type': 'text/html'
+    },
+    filename: join(PUBLIC_PATH, 'html', '404.html')
+  });
   
   constructor(message) {
     super(message);
   }
 }
-class BadRequestError extends RequestError {
-  errorData = {
-    statusCode: 400,
-    pathname: null
-  };
-  
-  constructor(message) {
-    super(message);
-  }
-}
-class MethodNotAllowed extends RequestError {
-  errorData = {
+class MethodNotAllowedError extends RequestError {
+  responseObject = createErrorResponseObject({
     statusCode: 405,
-    pathname: null
-  };
+  });
+
+  constructor(message) {
+    super(message);
+  }
+}
+class InternalSeverError extends RequestError {
+  responseObject = createErrorResponseObject({
+    statusCode: 500,
+  });
 
   constructor(message) {
     super(message);
@@ -40,6 +46,6 @@ class MethodNotAllowed extends RequestError {
 
 module.exports = {
   NotFoundError,
-  BadRequestError,
-  MethodNotAllowed
+  MethodNotAllowedError,
+  InternalSeverError
 };

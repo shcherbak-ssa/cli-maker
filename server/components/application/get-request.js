@@ -1,28 +1,25 @@
 'use strict';
 
 const usersCreator = require('../user/users/users-creator');
-const responseCreator = require('../response/response-creator');
-const responseSender = require('../response/response-sender');
-const urlParser = require('../parsers/url-parser');
+const responseCreator = require('./response/response-creator');
+const responseSender = require('./response/response-sender');
+const urlParser = require('./parsers/url-parser');
 
 const ROOT_PATHNAME = '/';
 
 class GetRequest {
   async run(request, response) {
-    let responseObject = null;
-
     try {
-      responseObject = await this._tryToRun(request);  
+      const responseObject = await this._tryToRun(request);
+      await responseSender.send(responseObject, response);
     } catch (error) {
       if( error.name === 'RequestError' ) {
-        console.log('get-request: ', error.message);
-        responseObject = await responseCreator.createErrorResponse(error.errorData);
+        const {responseObject} = error;
+        await responseSender.sendError(responseObject, response);
       } else {
         console.log(error);
+        await responseSender.sendInternalServerError(response);
       }
-    } finally {
-      if( responseObject === null ) return response.end();
-      await responseSender.send(responseObject, response);
     }
   }
 
@@ -30,25 +27,22 @@ class GetRequest {
     const parsedURL = urlParser.parse(request.url);
     const pathname = parsedURL.getPathname();
 
-    return rootRequest.isRootRequest(pathname)
-      ? await rootRequest.run()
-      : await fileRequest.run(parsedURL);
+    return this._isRootRequest(pathname)
+      ? await this._getResponseForRootRequest()
+      : await this._getResponseForFileRequest(pathname);
   }
 
   _isRootRequest(pathname) {
     return pathname === ROOT_PATHNAME;
   }
-  async _getResponseObjectForRootRequest() {
+  async _getResponseForRootRequest() {
     const connectionID = await usersCreator.create();
-    const responseObject = await this._getResponseObjectForFileRequest(ROOT_PATHNAME);
+    const responseObject = await this._getResponseForFileRequest(ROOT_PATHNAME);
     responseObject.setHeader('Set-Cookie', `connectionID=${connectionID}`);
     return responseObject;
   }
-  async _getResponseObjectForFileRequest(pathname) {
-    if( responseCreator.isValid(pathname) )
-      return responseCreator.createResponse(pathname)
-
-    throw new NotFoundError(`file ${pathname} did not find`);
+  async _getResponseForFileRequest(pathname) {
+    return responseCreator.createResponse(pathname)
   }
 }
 

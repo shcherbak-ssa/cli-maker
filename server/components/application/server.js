@@ -1,12 +1,15 @@
 'use strict';
 
 const HTTP = require('http');
+
 const getRequest = require('./get-request');
 const postRequest = require('./post-request');
 
-const {MethodNotAllowed} = require('./errors/request-errors');
-const responseCreator = require('./response/response-creator');
 const responseSender = require('./response/response-sender');
+const {
+  MethodNotAllowedError,
+  InternalSeverError
+} = require('./errors/request-errors');
 
 class AppServer {
   constructor({port, host}) {
@@ -35,11 +38,13 @@ class AppServer {
     try {
       await this._parseRequest(request, response);
     } catch (error) {
+      console.log(error);
+
       if( error.name === 'RequestError' ) {
-        const responseObject = await responseCreator.createErrorResponse(error.errorData);
-        return await responseSender.send(responseObject, response);
+        const {responseObject} = error;
+        await responseSender.sendError(responseObject, response);
       } else {
-        console.log('parse request error: ', error);
+        await responseSender.sendInternalServerError(response);
       }
     }
   }
@@ -51,7 +56,7 @@ class AppServer {
       case 'POST':
         return await postRequest.run(request, response);
       default:
-        throw new MethodNotAllowed(`invalid method ${method}`);
+        throw new MethodNotAllowedError(`invalid method ${method}`);
     }
   }
 }

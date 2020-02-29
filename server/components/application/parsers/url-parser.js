@@ -7,14 +7,6 @@ const ParsedURLCreator = require('../data/parsed-url');
 
 class URLParser {
   parse(url) {
-    try {
-      return this._tryToParse(url);
-    } catch (error) {
-      console.log(error);
-    }
-  }
-  
-  _tryToParse(url) {
     const parsedURL = URL.parse(url);
     const parsedURLCreator = new ParsedURLCreator();
 
@@ -26,6 +18,7 @@ class URLParser {
 
     return parsedURLCreator.getParsedURL();
   }
+  
   _getPathname(parsedURL) {
     return parsedURL.pathname;
   }
