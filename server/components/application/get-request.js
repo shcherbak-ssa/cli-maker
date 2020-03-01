@@ -13,7 +13,7 @@ class GetRequest {
       const responseObject = await this._tryToRun(request);
       await responseSender.send(responseObject, response);
     } catch (error) {
-      responseSender.sendError(error, response);
+      await responseSender.sendError(error, response);
     }
   }
 

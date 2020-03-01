@@ -16,6 +16,10 @@ class ParsedURL {
   getParamItem(key) {
     return this._data.params.get(key);
   }
+  parsePathname() {
+    const pathname = this._data.pathname.slice(1);
+    return pathname.split('/');
+  }
 }
 
 class ParsedURLCreator {

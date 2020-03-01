@@ -25,9 +25,11 @@ class RequestBodyCreator {
 
   setAccessID(accessID) {
     this._data.accessID = accessID;
+    return this;
   }
   setData(data) {
     this._data.data = data
+    return this;
   }
   getRequestBody() {
     return new RequestBody(this._data);

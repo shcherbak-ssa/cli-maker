@@ -6,11 +6,16 @@ const RequestBodyCreator = require('../data/request-body');
 class RequestBodyParser {
   async parse(request) {
     const {fields} = await this._getData(request);
-    const {accessID, data} = fields;
+    return fields;
+  }
+  async createRequestBody(body) {
+    const {accessID, data} = body;
     const requestBodyCreator = new RequestBodyCreator();
+
+    requestBodyCreator
+      .setAccessID(accessID)
+      .setData(data);
     
-    requestBodyCreator.setAccessID(accessID);
-    requestBodyCreator.setData(data);
     return requestBodyCreator.getRequestBody();
   }
 

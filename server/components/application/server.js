@@ -36,7 +36,7 @@ class AppServer {
       await this._parseRequest(request, response);
     } catch (error) {
       console.log(error);
-      responseSender.sendError(error, response);
+      await responseSender.sendError(error, response);
     }
   }
   async _parseRequest(request, response) {
