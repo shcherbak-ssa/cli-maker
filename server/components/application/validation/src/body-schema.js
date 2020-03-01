@@ -1,6 +1,7 @@
 'use strict';
 
 const bodySchema = {
+  type: 'object',
   properties: {
     accessID: {
       type: 'string'

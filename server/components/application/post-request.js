@@ -16,7 +16,8 @@ class PostRequest {
       await this._tryToRun(request, response);
     } catch (error) {
       console.log(error);
-      await responseSender.sendError(error, response);
+      response.end();
+      //await responseSender.sendError(error, response);
     }
   }
 
@@ -28,12 +29,19 @@ class PostRequest {
       const {entity, event, body} = await this._parseRequest(request);
       await bodyValidation.validate(entity, body);
 
+      console.log('body: ', body);
+
       const requestBody = await requestBodyParser.createRequestBody(body);
       const eventName = this._createEventName(entity, event);
 
-      appEventsEmitter.emit(eventName, requestBody, (responseObject) => {
-        response.end();
-      })
+      console.log('eventName: ', eventName);
+      console.log('requestBody: ', requestBody);
+
+      response.end();
+
+      //appEventsEmitter.emit(eventName, requestBody, (responseObject) => {
+       // response.end();
+      //})
     }
   }
   async _parseRequest(request) {
@@ -44,7 +52,7 @@ class PostRequest {
   }
 
   _createEventName(entity, event) {
-    return event + entity;
+    return `${event}-${entity}`;
   }
 }
 

@@ -18,9 +18,11 @@ class BodyValidation {
     await this._validateEntity(entity, validateObject.data);
   }
   async _validateBody(validateObject) {
+    console.log('validate-body');
     compileAndValidate(bodySchema, validateObject);
   }
   async _validateEntity(entity, data) {
+    console.log('validate-entity: ', data);
     const entitySchema = getEntitySchema(entity);
     compileAndValidate(entitySchema, data);
   }
