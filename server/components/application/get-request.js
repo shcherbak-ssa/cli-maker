@@ -13,13 +13,7 @@ class GetRequest {
       const responseObject = await this._tryToRun(request);
       await responseSender.send(responseObject, response);
     } catch (error) {
-      if( error.name === 'RequestError' ) {
-        const {responseObject} = error;
-        await responseSender.sendError(responseObject, response);
-      } else {
-        console.log(error);
-        await responseSender.sendInternalServerError(response);
-      }
+      responseSender.sendError(error, response);
     }
   }
 

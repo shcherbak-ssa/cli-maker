@@ -1,8 +1,8 @@
 'use strict';
 
-const FS = require('fs');
 const {STATUS_CODES} = require('http');
 const {InternalSeverError} = require('../errors/request-errors');
+const dataSender = require('./src/data-sender');
 
 class ResponseSender {
   async send(responseObject, response) {
@@ -10,21 +10,20 @@ class ResponseSender {
       await this._tryToSend(responseObject, response);
     } catch(error) {
       console.log(error);
-      await this.sendInternalServerError(response);  
+      await this.sendError(error, response);  
     }
   }
-  async sendError(responseObject, response) {
+  async sendError(error, response) {
     try {
-      await this._tryToSendError(responseObject, response);
+      if( error.name === 'RequestError' ) {
+        const {responseObject} = error;
+        await this._tryToSendError(responseObject, response);
+      }
+      throw new InternalSeverError();
     } catch(error) {
       console.log(error);
-      await this.sendInternalServerError(response);
+      await this.sendError(error, response);
     }
-  }
-  async sendInternalServerError(response) {
-    const requestError = new InternalSeverError();
-    responseObject = requestError.responseObject;
-    await this.sendError(responseObject, response); 
   }
 
   async _tryToSend(responseObject, response) {
@@ -34,7 +33,7 @@ class ResponseSender {
     response.writeHead(statusCode, message, headers);
 
     const filename = responseObject.getFilename();
-    await this._sendFile(filename, response);
+    await dataSender.sendFile(filename, response);
   }
   async _tryToSendError(responseObject, response) {
     const filename = responseObject.getFilename();
@@ -44,22 +43,6 @@ class ResponseSender {
     const message = STATUS_CODES[statusCode];
     response.writeHead(statusCode, message);
     response.end();
-  }
-
-  async _sendFile(filename, response) {
-    return new Promise((success, error) => {
-      const readStream = new FS.ReadStream(filename);
-      readStream
-        .on('readable', () => {
-          const data = readStream.read();
-          if( data !== null ) response.write(data);
-        })
-        .on('end', () => {
-          response.end();
-          success();
-        })
-        .on('error', error);
-    });
   }
 }
 

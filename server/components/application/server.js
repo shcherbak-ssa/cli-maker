@@ -6,10 +6,7 @@ const getRequest = require('./get-request');
 const postRequest = require('./post-request');
 
 const responseSender = require('./response/response-sender');
-const {
-  MethodNotAllowedError,
-  InternalSeverError
-} = require('./errors/request-errors');
+const {MethodNotAllowedError} = require('./errors/request-errors');
 
 class AppServer {
   constructor({port, host}) {
@@ -39,13 +36,7 @@ class AppServer {
       await this._parseRequest(request, response);
     } catch (error) {
       console.log(error);
-
-      if( error.name === 'RequestError' ) {
-        const {responseObject} = error;
-        await responseSender.sendError(responseObject, response);
-      } else {
-        await responseSender.sendInternalServerError(response);
-      }
+      responseSender.sendError(error, response);
     }
   }
   async _parseRequest(request, response) {
