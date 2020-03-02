@@ -10,7 +10,7 @@ class ProjectRepositoryImpl {
 }
 
 function implementProjectRepository() {
-  const projectRepositoryImpl = new ProjectRepositoryImpl;
+  const projectRepositoryImpl = new ProjectRepositoryImpl();
   IProjectRepository.getProjects = projectRepositoryImpl.getProjects;
 }
 
