@@ -1,11 +1,14 @@
 'use strict';
 
+const userRepository = require('../../repository/user-repository');
 const IProjectRepository = require('../i-project-repository');
 
 class RepositoryWorker {
-  async getUserData(accessID) {}
+  async getUserData(accessID) {
+    return await userRepository.getUserData(accessID);
+  }
   async getProjects(accessID) {
-    return await projectRepository.getProjects(accessID);
+    return await IProjectRepository.getProjects(accessID);
   }
 }
 
