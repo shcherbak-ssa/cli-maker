@@ -10,53 +10,49 @@ class RequestError extends Error {
   }
 }
 
-class NotFoundError extends RequestError {
-  responseObject = createErrorResponseObject({
-    statusCode: 404,
-    headers: {
-      'Content-Type': 'text/html'
-    },
-    filename: join(PUBLIC_PATH, 'html', '404.html')
-  });
-  
-  constructor(message) {
-    super(message);
-  }
-}
-class MethodNotAllowedError extends RequestError {
-  responseObject = createErrorResponseObject({
-    statusCode: 405,
-  });
-
-  constructor(message) {
-    super(message);
-  }
-}
+/** Client errors */
 class BadRequestError extends PostRequestError {
   constructor(message) {
     super(message);
-
-    this.responseObject = createErrorResponseObject({
-      type: 'json',
+    this.responseObject = errorResponse.createJSONResponse({
       statusCode: 400,
-      headers: {
-        'Content-Type': 'application/json'
-      },
       data: {message}
     });
   }
 }
-class InternalSeverError extends RequestError {
-  responseObject = createErrorResponseObject({
-    statusCode: 500,
-  });
-
+class NotFoundError extends RequestError {
   constructor(message) {
     super(message);
+    this.responseObject = errorResponse.createFileResponse({
+      statusCode: 404,
+      headers: {
+        'Content-Type': 'text/html'
+      },
+      filename: join(PUBLIC_PATH, 'html', '404.html')
+    });
+  }
+}
+class MethodNotAllowedError extends RequestError {
+  constructor(message) {
+    super(message);
+    this.responseObject = errorResponse.createSimpleResponse({
+      statusCode: 405,
+    });
+  }
+}
+
+/** Server errors */
+class InternalSeverError extends RequestError {
+  constructor(message) {
+    super(message);
+    this.responseObject = errorResponse.createSimpleResponse({
+      statusCode: 500,
+    });
   }
 }
 
 module.exports = {
+  BadRequestError,
   NotFoundError,
   MethodNotAllowedError,
   InternalSeverError
