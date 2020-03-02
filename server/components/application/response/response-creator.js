@@ -9,9 +9,9 @@ const {FileResponseCreator} = require('../data/response-creators');
 
 class ResponseCreator {
   
-  async createResponse(pathname) {
+  async createFileResponse(pathname) {
     try {
-      return await this._tryToCreateResponse(pathname);
+      return await this._tryToCreateFileResponse(pathname);
     } catch (error) {
       console.log(error);
       if( error.name === 'RequestError' ) throw error;
@@ -19,10 +19,10 @@ class ResponseCreator {
     }
   }
 
-  async _tryToCreateResponse(pathname) {
+  async _tryToCreateFileResponse(pathname) {
     const publicFileConfig = await publicFilesController.getPublicFileConfig(pathname);
     if( this._isFileExist(publicFileConfig.filename) )
-      return this._createResponseObject(publicFileConfig);
+      return this._createFileResponseObject(publicFileConfig);
 
     throw new NotFoundError(`cannot resolve filename - ${publicFileConfig.filename}`);
   }
@@ -30,7 +30,7 @@ class ResponseCreator {
   _isFileExist(filename) {
     return existsSync(filename);
   }
-  _createResponseObject({headers, filename}) {
+  _createFileResponseObject({headers, filename}) {
     const creator = new FileResponseCreator();
     creator
       .setStatusCodeAndMessage(SUCCESS_STATUS_CODE)

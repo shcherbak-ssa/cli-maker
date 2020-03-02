@@ -1,6 +1,6 @@
 'use strict';
 
-const {PUBLIC_PATH} = require('../../../utils/public-path');
+const {PUBLIC_PATH} = require('../../../utils/public-paths');
 const errorResponse = require('./src/error-response');
 
 class RequestError extends Error {
@@ -11,7 +11,7 @@ class RequestError extends Error {
 }
 
 /** Client errors */
-class BadRequestError extends PostRequestError {
+class BadRequestError extends RequestError {
   constructor(message) {
     super(message);
     this.responseObject = errorResponse.createJSONResponse({

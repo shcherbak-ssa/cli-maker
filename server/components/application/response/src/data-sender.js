@@ -8,22 +8,10 @@ class DataSender {
     response.end();
   }
   async sendFileResponse(fileResponse, response) {
-    await this._writeHead(fileResponse, response);
     const filename = fileResponse.getFilename();
-
-    return new Promise((success, error) => {
-      const readStream = new FS.ReadStream(filename);
-      readStream
-        .on('readable', () => {
-          const data = readStream.read();
-          if( data !== null ) response.write(data);
-        })
-        .on('end', () => {
-          response.end();
-          success();
-        })
-        .on('error', error);
-    });
+    await this._writeHead(fileResponse, response);
+    await this._sendFile(filename, response);
+    response.end();
   }
   async sendJSONResponse(jsonResponse, response) {
     const jsonObject = jsonResponse.getStringifyData();
@@ -36,6 +24,18 @@ class DataSender {
     const message = responseObject.getMessage();
     const headers = responseObject.getHeaders() || {};
     response.writeHead(statusCode, message, headers);
+  }
+  async _sendFile(filename, response) {
+    return new Promise((success, error) => {
+      const readStream = new FS.ReadStream(filename);
+      readStream
+        .on('readable', () => {
+          const data = readStream.read();
+          if( data !== null ) response.write(data);
+        })
+        .on('end', success)
+        .on('error', error)
+    });
   }
 }
 

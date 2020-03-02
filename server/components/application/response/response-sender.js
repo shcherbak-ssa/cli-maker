@@ -16,18 +16,21 @@ class ResponseSender {
     try {
       if( error.name === 'RequestError' ) {
         const {responseObject} = error;
+        console.log('responseObject: ', responseObject);
         await this._tryToSend(responseObject, response);
+      } else {
+        throw new InternalSeverError();
       }
-      throw new InternalSeverError();
     } catch(error) {
       console.log(error);
-      await this.sendError(error, response);
+      setTimeout(process.exit, 1000, 1);
+      //await this.sendError(error, response);
     }
   }
 
   async _tryToSend(responseObject, response) {
     const type = responseObject.getType();
-    const sender = this._getSender(type);
+    const sender = this._getSender(type).bind(dataSender);
     await sender(responseObject, response);
   }
   _getSender(type) {

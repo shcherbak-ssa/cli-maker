@@ -10,8 +10,8 @@ const ROOT_PATHNAME = '/';
 class GetRequest {
   async run(request, response) {
     try {
-      const responseObject = await this._tryToRun(request);
-      await responseSender.send(responseObject, response);
+      const fileResponse = await this._tryToRun(request);
+      await responseSender.send(fileResponse, response);
     } catch (error) {
       await responseSender.sendError(error, response);
     }
@@ -20,7 +20,7 @@ class GetRequest {
   async _tryToRun(request) {
     const parsedURL = urlParser.parse(request.url);
     const pathname = parsedURL.getPathname();
-
+    
     return this._isRootRequest(pathname)
       ? await this._getResponseForRootRequest()
       : await this._getResponseForFileRequest(pathname);
@@ -31,12 +31,12 @@ class GetRequest {
   }
   async _getResponseForRootRequest() {
     const connectionID = await usersCreator.create();
-    const responseObject = await this._getResponseForFileRequest(ROOT_PATHNAME);
-    responseObject.setHeader('Set-Cookie', `connectionID=${connectionID}`);
-    return responseObject;
+    const fileResponse = await this._getResponseForFileRequest(ROOT_PATHNAME);
+    fileResponse.setHeader('Set-Cookie', `connectionID=${connectionID}`);
+    return fileResponse;
   }
   async _getResponseForFileRequest(pathname) {
-    return responseCreator.createResponse(pathname)
+    return await responseCreator.createFileResponse(pathname);
   }
 }
 

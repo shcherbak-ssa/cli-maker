@@ -1,5 +1,6 @@
 'use strict';
 
+const {join} = require('path');
 const publicFilesConfig = require('./public-files-config');
 const {NotFoundError} = require('../../errors/request-errors');
 

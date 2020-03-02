@@ -20,7 +20,7 @@ class FileResponse extends SimpleResponse {
     super(fileResponseData);
   }
 
-  setHeaders(key, value) {
+  setHeader(key, value) {
     this._data.headers[key] = value;
   }
   getHeaders() {
@@ -43,6 +43,7 @@ class FileResponseCreator extends SimpleResponseCreator {
   }
   setFilename(filename) {
     this._data.filename = filename;
+    return this;
   }
   getResponseData() {
     return new FileResponse(this._data);
