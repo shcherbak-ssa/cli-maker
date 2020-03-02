@@ -26,15 +26,19 @@ class UserResponseCreator {
 
   setErrorFlag(isError) {
     this._data.isError = isError;
+    return this;
   }
   setType(type) {
     this._data.type = type;
+    return this;
   }
   setMessage(message) {
     this._data.message = message;
+    return this;
   }
   setData(data) {
     this._data.data = data;
+    return this;
   }
   getResponse() {
     return new UserResponse(this._data);

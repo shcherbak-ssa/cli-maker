@@ -24,9 +24,11 @@ class SelectUserDataCreator {
 
   setUserData(userData) {
     this._data.userData = userData;
+    return this;
   }
   setProjects(projects) {
     this._data.projects = projects;
+    return this;
   }
   getSelectData() {
     return new SelectUserData(this._data);

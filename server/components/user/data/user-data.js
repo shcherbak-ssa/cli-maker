@@ -34,6 +34,7 @@ class UserDataCreator {
   }
   setUserID(userID) {
     this._data.userID = userID;
+    return this;
   }
   getUserData() {
     return new UserData(this._data);

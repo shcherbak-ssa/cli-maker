@@ -1,14 +1,15 @@
 'use strict';
 
-const UserResponseCreator = require('./user-response');
+const UserResponseCreator = require('./src/user-response');
 
 class UserResponseWorker {
   createErrorResponse(type, message) {
     const creator = new UserResponseCreator();
     
-    creator.setErrorFlag(true);
-    creator.setType(type);
-    creator.setMessage(message);
+    creator
+      .setErrorFlag(true)
+      .setType(type)
+      .setMessage(message);
 
     return creator.getResponse();
   }
