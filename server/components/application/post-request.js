@@ -37,17 +37,19 @@ class PostRequest {
     console.log('event: ', parsedPathname.event);
     console.log('requestBody: ', requestBody);
 
-    response.end();
-
-    //appEventsEmitter.emit(eventName, requestBody, (responseObject) => {
-     // response.end();
-    //})
+    appEventsEmitter.emit(eventName, requestBody, this._responseCallback(response));
   }
   async _parseRequest(request) {
     const parsedURL = urlParser.parse(request.url);
     const parsedPathname = parsedURL.parsePathname();
     const body = await requestBodyParser.parse(request);
     return {parsedPathname, body};
+  }
+  _responseCallback(response) {
+    return async (entityResponse) => {
+      console.log('entityResponse:', entityResponse);
+      response.end();
+    }
   }
 }
 
