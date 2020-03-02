@@ -26,9 +26,8 @@ class DataSender {
     });
   }
   async sendJSONResponse(jsonResponse, response) {
-    await this._writeHead(jsonResponse, response);
     const jsonObject = jsonResponse.getStringifyData();
-    
+    await this._writeHead(jsonResponse, response);
     response.end(jsonObject);
   }
 
