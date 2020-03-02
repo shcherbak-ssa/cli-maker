@@ -1,8 +1,6 @@
 'use strict';
 
-const {join} = require('path');
-const PUBLIC_PATH = join(process.cwd(), 'public');
-
+const {PUBLIC_PATH} = require('../../../utils/public-path');
 const createErrorResponseObject = require('./src/create-error-response-object');
 
 class RequestError extends Error {

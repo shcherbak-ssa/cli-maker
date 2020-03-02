@@ -1,7 +1,5 @@
 'use strict';
 
-const {join} = require('path');
-const PUBLIC_PATH = join(process.cwd(), 'public');
 const publicFilesConfig = require('./public-files-config');
 const {NotFoundError} = require('../../errors/request-errors');
 
@@ -21,12 +19,12 @@ class PublicFilesController {
     throw new NotFoundError(`invalid pathname: ${pathname}`);
   }
   _transformPublicFileConfig(publicFileConfig, pathname) {
-    const {headers, paths} = publicFileConfig;
-    const filename = this._createFilename(paths, pathname);
+    const {headers, publicPath} = publicFileConfig;
+    const filename = this._createFilename(publicPath, pathname);
     return {headers, filename};
   }
-  _createFilename(paths, pathname) {
-    return join(PUBLIC_PATH, ...paths, pathname.slice(1));
+  _createFilename(publicPath, pathname) {
+    return join(publicPath, pathname.slice(1));
   }
 }
 

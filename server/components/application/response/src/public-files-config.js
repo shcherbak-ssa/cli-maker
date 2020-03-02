@@ -1,23 +1,29 @@
 'use strict';
 
+const {
+  ROOT_PATH,
+  JS_PUBLIC_PATH,
+  IMAGES_PUBLIC_PATH
+} = require('../../../../utils/public-paths');
+
 let publicFilesConfig = {
   '^\/$': {
     headers: {
       'Content-Type': 'text/html'
     },
-    paths: ['html', 'index.html']
+    publicPath: ROOT_PATH
   },
   '\.js$': {
     headers: {
       'Content-Type': 'application/javascript'
     },
-    paths: ['js']
+    publicPath: JS_PUBLIC_PATH
   },
   '\.ico$': {
     headers: {
       'Content-Type': 'image/x-icon'
     },
-    paths: ['assets', 'images']
+    publicPath: IMAGES_PUBLIC_PATH
   }
 };
 
