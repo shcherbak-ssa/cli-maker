@@ -1,7 +1,7 @@
 'use strict';
 
 const {PUBLIC_PATH} = require('../../../utils/public-path');
-const createErrorResponseObject = require('./src/create-error-response-object');
+const errorResponse = require('./src/error-response');
 
 class RequestError extends Error {
   constructor(message) {
