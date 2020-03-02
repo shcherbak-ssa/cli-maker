@@ -29,8 +29,6 @@ class PostRequest {
       const {entity, event, body} = await this._parseRequest(request);
       await bodyValidation.validate(entity, body);
 
-      console.log('body: ', body);
-
       const requestBody = await requestBodyParser.createRequestBody(body);
       const eventName = this._createEventName(entity, event);
 
