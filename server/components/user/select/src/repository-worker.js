@@ -1,6 +1,6 @@
 'use strict';
 
-const projectRepository = require('../project-repository');
+const IProjectRepository = require('../i-project-repository');
 
 class RepositoryWorker {
   async getUserData(accessID) {}

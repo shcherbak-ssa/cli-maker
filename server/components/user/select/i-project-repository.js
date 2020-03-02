@@ -1,8 +1,8 @@
 'use strict';
 
 /** Interface */
-const projectRepository = {
+const IProjectRepository = {
   async getProjects: (accessID) => null
 };
 
-module.exports = projectRepository;
+module.exports = IProjectRepository;
