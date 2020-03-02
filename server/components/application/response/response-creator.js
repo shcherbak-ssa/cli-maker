@@ -5,8 +5,7 @@ const SUCCESS_STATUS_CODE = 200;
 
 const publicFilesController = require('./src/public-files-controller');
 const {NotFoundError, InternalSeverError} = require('../errors/request-errors');
-
-const ResponseObjectCreator = require('../data/response-object');
+const {FileResponseCreator} = require('../data/response-creators');
 
 class ResponseCreator {
   
@@ -15,7 +14,6 @@ class ResponseCreator {
       return await this._tryToCreateResponse(pathname);
     } catch (error) {
       console.log(error);
-
       if( error.name === 'RequestError' ) throw error;
       throw new InternalSeverError();
     }
@@ -33,13 +31,13 @@ class ResponseCreator {
     return existsSync(filename);
   }
   _createResponseObject({headers, filename}) {
-    const responseObjectCreator = new ResponseObjectCreator();
-    responseObjectCreator
-      .setStatusCode(SUCCESS_STATUS_CODE)
+    const creator = new FileResponseCreator();
+    creator
+      .setStatusCodeAndMessage(SUCCESS_STATUS_CODE)
       .setHeaders(headers)
       .setFilename(filename);
 
-    return responseObjectCreator.getResponseObject();
+    return creator.getResponseData();
   }
 }
 
