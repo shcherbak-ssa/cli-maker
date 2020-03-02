@@ -12,9 +12,9 @@ async function sendPostRequest() {
       'Content-Type': 'application/json'
     },
     body: JSON.stringify({
-      access: '1234',
+      accessID: '1234',
       data: {
-        named: 'Shcherbak',
+        name: 'Shcherbak',
         userID: '4321'
       }
     })
@@ -22,7 +22,6 @@ async function sendPostRequest() {
 
   const result = await response.json();
 
-  console.log(`Content-Type: ${response.headers.get('Content-Type')}`);
   console.log(`status: ${response.status}`);
-  console.log(`results: ${result}`);
+  console.log('results:', result);
 }

@@ -14,7 +14,7 @@ class ResponseSender {
   }
   async sendError(error, response) {
     try {
-      if( error.name === 'RequestError' ) {
+      if( 'responseObject' in error ) {
         const {responseObject} = error;
         await this._tryToSend(responseObject, response);
       } else {

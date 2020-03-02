@@ -9,6 +9,7 @@ const appEventsEmitter = require('./data/app-events-emitter');
 const responseSender = require('./response/response-sender');
 
 const bodyValidation = require('./validation/body-validation');
+const {InvalidUserError} = require('./errors/post-request-errors');
 
 class PostRequest {
   async run(request, response) {
@@ -24,21 +25,23 @@ class PostRequest {
     const connectionID = cookieParser.getConnectionID(request.headers);
     const isValidUser = usersController.checkUser(connectionID);
 
-    if( isValidUser ) {
-      const {parsedPathname, body} = await this._parseRequest(request);
-      await bodyValidation.validate(parsedPathname.entity, body);
+    if( isValidUser ) await this._doValidUserAction(request, response);
+    else throw new InvalidUserError();
+  }
+  async _doValidUserAction(request, response) {
+    const {parsedPathname, body} = await this._parseRequest(request);
+    await bodyValidation.validate(parsedPathname.entity, body);
 
-      const requestBody = await requestBodyParser.createRequestBody(body);
+    const requestBody = await requestBodyParser.createRequestBody(body);
 
-      console.log('event: ', parsedPathname.event);
-      console.log('requestBody: ', requestBody);
+    console.log('event: ', parsedPathname.event);
+    console.log('requestBody: ', requestBody);
 
-      response.end();
+    response.end();
 
-      //appEventsEmitter.emit(eventName, requestBody, (responseObject) => {
-       // response.end();
-      //})
-    }
+    //appEventsEmitter.emit(eventName, requestBody, (responseObject) => {
+     // response.end();
+    //})
   }
   async _parseRequest(request) {
     const parsedURL = urlParser.parse(request.url);

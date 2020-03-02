@@ -4,19 +4,15 @@ const bodySchema = require('./src/body-schema');
 const getEntitySchema = require('./src/entity-schema');
 const compileAndValidate = require('./src/compile-and-validate');
 
-const {BadRequestError, InternalSeverError} = require('../errors/request-errors');
+const {InternalSeverError} = require('../errors/request-errors');
 
 class BodyValidation {
   async validate(entity, validateObject) {
     try {
       await this._tryToValidate(entity, validateObject);
     } catch (error) {
-      if( error.name === 'ValidationError' ) {
-        const {message} = error;
-        throw new BadRequestError(message);
-      } else {
-        throw new InternalSeverError();
-      }
+      if( error.name === 'ValidationError' ) throw error;
+      else throw new InternalSeverError();
     }
   }
 
