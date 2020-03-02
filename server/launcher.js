@@ -1,6 +1,8 @@
 'use strict';
 
 const AppServer = require('./components/application/server');
+const initProjectComponent = require('./components/project/launcher');
+const initRepositoryComponent = require('./components/repository/launcher');
 
 class AppLauncher {
   initApplication(config) {
@@ -12,8 +14,14 @@ class AppLauncher {
     }
   }
   _tryToInitApplication(config) {
+    this._initComponents();
+
     const appServer = new AppServer(config);
     appServer.run();
+  }
+  _initComponents() {
+    initProjectComponent();
+    initRepositoryComponent();
   }
 }
 
