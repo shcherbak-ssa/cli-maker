@@ -3,7 +3,14 @@
 const FS = require('fs');
 
 class DataSender {
-  async sendFile(filename, response) {
+  async sendSimpleResponse(simpleResponse, response) {
+    await this._writeHead(simpleResponse, response);
+    response.end();
+  }
+  async sendFileResponse(fileResponse, response) {
+    await this._writeHead(fileResponse, response);
+    const filename = fileResponse.getFilename();
+
     return new Promise((success, error) => {
       const readStream = new FS.ReadStream(filename);
       readStream
@@ -18,9 +25,18 @@ class DataSender {
         .on('error', error);
     });
   }
-  async sendJSON(object, response) {
-    const jsonObject = JSON.stringify(object);
+  async sendJSONResponse(jsonResponse, response) {
+    await this._writeHead(jsonResponse, response);
+    const jsonObject = jsonResponse.getStringifyData();
+    
     response.end(jsonObject);
+  }
+
+  async _writeHead(responseData, response) {
+    const statusCode = responseData.getStatusCode();
+    const message = responseData.getMessage();
+    const headers = responseData.getHeaders() || {};
+    response.writeHead(statusCode, message, headers);
   }
 }
 
