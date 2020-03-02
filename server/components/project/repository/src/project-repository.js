@@ -8,5 +8,4 @@ class ProjectRepository {
   }
 };
 
-const projectRepository = new ProjectRepository();
-module.exports = projectRepository;
+module.exports = ProjectRepository;
