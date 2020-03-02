@@ -6,7 +6,6 @@ button.onclick = () => sendPostRequest();
 
 async function sendPostRequest() {
   console.log('send');
-
   const response = await fetch('user/create', {
     method: 'POST',
     headers: {
@@ -20,4 +19,10 @@ async function sendPostRequest() {
       }
     })
   });
+
+  const result = await response.json();
+
+  console.log(`Content-Type: ${response.headers.get('Content-Type')}`);
+  console.log(`status: ${response.status}`);
+  console.log(`results: ${result}`);
 }

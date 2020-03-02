@@ -11,8 +11,6 @@ class BodyValidation {
     try {
       await this._tryToValidate(entity, validateObject);
     } catch (error) {
-      console.log(error);
-      
       if( error.name === 'ValidationError' ) {
         const {message} = error;
         throw new BadRequestError(message);

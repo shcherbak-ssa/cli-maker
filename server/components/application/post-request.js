@@ -25,13 +25,12 @@ class PostRequest {
     const isValidUser = usersController.checkUser(connectionID);
 
     if( isValidUser ) {
-      const {entity, event, body} = await this._parseRequest(request);
-      await bodyValidation.validate(entity, body);
+      const {parsedPathname, body} = await this._parseRequest(request);
+      await bodyValidation.validate(parsedPathname.entity, body);
 
       const requestBody = await requestBodyParser.createRequestBody(body);
-      const eventName = this._createEventName(entity, event);
 
-      console.log('eventName: ', eventName);
+      console.log('event: ', parsedPathname.event);
       console.log('requestBody: ', requestBody);
 
       response.end();
@@ -43,13 +42,9 @@ class PostRequest {
   }
   async _parseRequest(request) {
     const parsedURL = urlParser.parse(request.url);
-    const [entity, event] = parsedURL.parsePathname();
+    const parsedPathname = parsedURL.parsePathname();
     const body = await requestBodyParser.parse(request);
-    return {entity, event, body};
-  }
-
-  _createEventName(entity, event) {
-    return `${event}-${entity}`;
+    return {parsedPathname, body};
   }
 }
 

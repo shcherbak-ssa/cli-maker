@@ -23,7 +23,6 @@ class ResponseSender {
     } catch(error) {
       console.log(error);
       await this.sendError(error, response);
-      process.exit(1);
     }
   }
 

@@ -22,6 +22,9 @@ class JSONResponse extends SimpleResponse {
     super(jsonResponseData);
   }
 
+  getHeaders() {
+    return this._data.headers;
+  }
   getStringifyData() {
     return JSON.stringify(this._data.data);
   }
