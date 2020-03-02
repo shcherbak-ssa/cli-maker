@@ -33,11 +33,12 @@ class PostRequest {
     await bodyValidation.validate(parsedPathname.entity, body);
 
     const requestBody = await requestBodyParser.createRequestBody(body);
+    const {event} = parsedPathname;
 
     console.log('event: ', parsedPathname.event);
     console.log('requestBody: ', requestBody);
 
-    appEventsEmitter.emit(eventName, requestBody, this._responseCallback(response));
+    appEventsEmitter.emit(event, requestBody, this._responseCallback(response));
   }
   async _parseRequest(request) {
     const parsedURL = urlParser.parse(request.url);

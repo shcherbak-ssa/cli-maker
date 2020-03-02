@@ -6,13 +6,13 @@ button.onclick = () => sendPostRequest();
 
 async function sendPostRequest() {
   console.log('send');
-  const response = await fetch('user/create', {
+  const response = await fetch('user/select', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
     },
     body: JSON.stringify({
-      accessID: '1234',
+      accessID: '1234567890',
       data: {
         name: '',
         userID: ''

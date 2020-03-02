@@ -21,12 +21,12 @@ class SelectUser {
     return userResponseWorker.createSuccessResponse(data);
   }
   async _getSelectUserDataFromRepository(accessID) {
-    const userDataType = await repositoryWorker.getUserData(accessID);
+    const userData = await repositoryWorker.getUserData(accessID);
     const projects = await repositoryWorker.getProjects(accessID);
     const creator = new SelectUserDataCreator();
 
     return creator
-      .setUserData(userDataType)
+      .setUserData(userData)
       .setProjects(projects)
       .getSelectData();
   }

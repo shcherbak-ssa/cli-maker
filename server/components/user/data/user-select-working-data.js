@@ -17,6 +17,7 @@ class UserSelectWorkingDataCreator {
 
   setAccessID(accessID) {
     this._accessID = accessID;
+    return this;
   }
   getWorkingData() {
     return new UserSelectWorkingData(this._accessID);

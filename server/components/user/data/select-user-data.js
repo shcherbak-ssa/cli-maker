@@ -2,8 +2,8 @@
 
 class SelectUserDataType {
   constructor() {
-    userData = {};
-    projects = [];
+    this.userData = {};
+    this.projects = [];
   }
 }
 
