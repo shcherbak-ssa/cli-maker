@@ -2,7 +2,7 @@
 
 /** Interface */
 const IProjectRepository = {
-  async getProjects: (accessID) => null
+  async getProjects(accessID) {}
 };
 
 module.exports = IProjectRepository;

@@ -2,7 +2,7 @@
 
 /** Interface */
 const IUserRepository = {
-  async getUserData: (accessID) => null
+  async getUserData(accessID) {}
 };
 
 module.exports = IUserRepository;
