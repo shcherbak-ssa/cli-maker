@@ -16,15 +16,14 @@ class ResponseSender {
     try {
       if( error.name === 'RequestError' ) {
         const {responseObject} = error;
-        console.log('responseObject: ', responseObject);
         await this._tryToSend(responseObject, response);
       } else {
         throw new InternalSeverError();
       }
     } catch(error) {
       console.log(error);
-      setTimeout(process.exit, 1000, 1);
-      //await this.sendError(error, response);
+      await this.sendError(error, response);
+      process.exit(1);
     }
   }
 

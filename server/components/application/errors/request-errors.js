@@ -1,7 +1,7 @@
 'use strict';
 
-const {PUBLIC_PATH} = require('../../../utils/public-paths');
 const errorResponse = require('./src/error-response');
+const {NOT_FOUND_ERROR_PATH} = require('../../../utils/public-paths');
 
 class RequestError extends Error {
   constructor(message) {
@@ -28,7 +28,7 @@ class NotFoundError extends RequestError {
       headers: {
         'Content-Type': 'text/html'
       },
-      filename: join(PUBLIC_PATH, 'html', '404.html')
+      filename: NOT_FOUND_ERROR_PATH
     });
   }
 }
