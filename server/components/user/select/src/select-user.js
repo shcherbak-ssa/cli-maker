@@ -1,6 +1,7 @@
 'use strict';
 
-const SelectUserDataCreator = require('../data/select-user-data');
+const repostioryWorker = require('./repository-worker');
+const SelectUserDataCreator = require('../../data/select-user-data');
 
 class SelectUser {
   async handler(workingData) {
