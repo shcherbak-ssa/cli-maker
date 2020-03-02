@@ -32,10 +32,10 @@ class DataSender {
     response.end(jsonObject);
   }
 
-  async _writeHead(responseData, response) {
-    const statusCode = responseData.getStatusCode();
-    const message = responseData.getMessage();
-    const headers = responseData.getHeaders() || {};
+  async _writeHead(responseObject, response) {
+    const statusCode = responseObject.getStatusCode();
+    const message = responseObject.getMessage();
+    const headers = responseObject.getHeaders() || {};
     response.writeHead(statusCode, message, headers);
   }
 }

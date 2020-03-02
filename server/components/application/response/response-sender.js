@@ -1,6 +1,5 @@
 'use strict';
 
-const {STATUS_CODES} = require('http');
 const {InternalSeverError} = require('../errors/request-errors');
 const dataSender = require('./src/data-sender');
 
@@ -17,7 +16,7 @@ class ResponseSender {
     try {
       if( error.name === 'RequestError' ) {
         const {responseObject} = error;
-        await this._tryToSendError(responseObject, response);
+        await this._tryToSend(responseObject, response);
       }
       throw new InternalSeverError();
     } catch(error) {
@@ -27,22 +26,21 @@ class ResponseSender {
   }
 
   async _tryToSend(responseObject, response) {
-    const statusCode = responseObject.getStatusCode();
-    const message = STATUS_CODES[statusCode];
-    const headers = responseObject.getHeaders();
-    response.writeHead(statusCode, message, headers);
-
-    const filename = responseObject.getFilename();
-    await dataSender.sendFile(filename, response);
+    const type = responseObject.getType();
+    const sender = this._getSender(type);
+    await sender(responseObject, response);
   }
-  async _tryToSendError(responseObject, response) {
-    const filename = responseObject.getFilename();
-    if( filename !== null ) return await this._tryToSend(responseObject, response);
-
-    const statusCode = responseObject.getStatusCode();
-    const message = STATUS_CODES[statusCode];
-    response.writeHead(statusCode, message);
-    response.end();
+  _getSender(type) {
+    switch(type) {
+      case 'simple':
+        return dataSender.sendSimpleResponse;
+      case 'file':
+        return dataSender.sendFileResponse;
+      case 'json':
+        return dataSender.sendJSONResponse;
+      default:
+        throw new InternalSeverError();
+    }
   }
 }
 
