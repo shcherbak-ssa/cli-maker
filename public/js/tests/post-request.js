@@ -14,8 +14,8 @@ async function sendPostRequest() {
     body: JSON.stringify({
       accessID: '1234',
       data: {
-        name: 'Shcherbak',
-        userID: '4321'
+        name: '',
+        userID: ''
       }
     })
   });
