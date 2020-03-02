@@ -1,8 +1,11 @@
 'use strict';
 
-const compileAndValidate = require('./src/compile-and-validate');
 const bodySchema = require('./src/body-schema');
 const getEntitySchema = require('./src/entity-schema');
+const compileAndValidate = require('./src/compile-and-validate');
+
+const {BadRequestError} = require('../errors/post-request-errors');
+const {InternalSeverError} = require('../errors/request-errors');
 
 class BodyValidation {
   async validate(entity, validateObject) {
@@ -10,6 +13,13 @@ class BodyValidation {
       await this._tryToValidate(entity, validateObject);
     } catch (error) {
       console.log(error);
+      
+      if( error.name === 'ValidationError' ) {
+        const {message} = error;
+        throw new BadRequestError(message);
+      } else {
+        throw new InternalSeverError();
+      }
     }
   }
 

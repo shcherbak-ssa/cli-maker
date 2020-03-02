@@ -3,16 +3,13 @@
 const AJV = require('ajv');
 const ajv = new AJV();
 
-const ValidationError = require('./validation-error');
+const ValidationError = require('../../errors/validation-error');
 
 function compileAndValidate(schema, object) {
-  console.log('schema: ', schema);
-  console.log('object: ', object);
   const validate = ajv.compile(schema);
-  console.log('validate: ', validate);
   const isValid = validate(object);
-  console.log('isValid: ', isValid);
-  if( !isValid ) throw new ValidationError('invalid data', validate.errors);
+
+  if( !isValid ) throw new ValidationError(validate.errors[0].message);
 }
 
 module.exports = compileAndValidate;

@@ -34,6 +34,20 @@ class MethodNotAllowedError extends RequestError {
     super(message);
   }
 }
+class BadRequestError extends PostRequestError {
+  constructor(message) {
+    super(message);
+
+    this.responseObject = createErrorResponseObject({
+      type: 'json',
+      statusCode: 400,
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      data: {message}
+    });
+  }
+}
 class InternalSeverError extends RequestError {
   responseObject = createErrorResponseObject({
     statusCode: 500,

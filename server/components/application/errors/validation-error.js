@@ -1,10 +1,9 @@
 'use strict';
 
 class ValidationError extends Error {
-  constructor(message, errors) {
+  constructor(message) {
     super(message);
     this.name = 'ValidationError';
-    this.errors = errors;
   }
 }
 
