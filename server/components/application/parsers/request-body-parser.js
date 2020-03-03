@@ -10,13 +10,12 @@ class RequestBodyParser {
   }
   async createRequestBody(body) {
     const {accessID, data} = body;
-    const requestBodyCreator = new RequestBodyCreator();
+    const creator = new RequestBodyCreator();
 
-    requestBodyCreator
+    return creator
       .setAccessID(accessID)
-      .setData(data);
-    
-    return requestBodyCreator.getRequestBody();
+      .setData(data)
+      .getRequestBody();
   }
 
   async _getData(request) {
