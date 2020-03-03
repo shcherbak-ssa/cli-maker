@@ -31,9 +31,16 @@ class ProjectRulesError extends ProjectError {
     this.projectResponse = createErrorResponse('rule', message);
   }
 }
+class ProjectUseCaseError extends ProjectError {
+  constructor(message) {
+    super(message);
+    this.projectResponse = createErrorResponse('use-case', message);
+  }
+}
 
 module.exports = {
   ProjectServerError,
   ProjectDoesNotExist,
-  ProjectRulesError
+  ProjectRulesError,
+  ProjectUseCaseError
 };
