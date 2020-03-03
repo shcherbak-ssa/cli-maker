@@ -1,6 +1,6 @@
 'use strict';
 
-const IDeleteProjectRepository = require('../i-delete-project-repository');
+const IDeleteProjectRepository = require('../interfaces/i-delete-project-repository');
 
 class DeleteProjectRepository {
   async updateRepository(accessID, projectData) {

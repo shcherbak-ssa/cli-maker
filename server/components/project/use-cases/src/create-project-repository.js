@@ -1,6 +1,6 @@
 'use strict';
 
-const ICreateProjectRepository = require('../i-create-project-repository');
+const ICreateProjectRepository = require('../interfaces/i-create-project-repository');
 
 class CreateProjectRepository {
   async updateRepository(accessID, projectData) {

@@ -1,6 +1,6 @@
 'use strict';
 
-const IRenameProjectRepository = require('../i-rename-project-repository');
+const IRenameProjectRepository = require('../interfaces/i-rename-project-repository');
 
 class RenameProjectRepository {
   async updateRepository(accessID, projectData) {
