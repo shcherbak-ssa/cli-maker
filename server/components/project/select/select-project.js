@@ -3,6 +3,7 @@
 const projectResponseWorker = require('../data/project-response-worker');
 const repositoryWorker = require('./src/repository-worker');
 const SelectProjectDataCreator = require('../data/select-project-data');
+const {ProjectServerError} = require('../errors');
 
 class SelectProject {
   async handler(workingData) {
@@ -10,6 +11,10 @@ class SelectProject {
       return await this._tryToRunHandler(workingData);
     } catch (error) {
       console.log(error);
+      if( error.name !== 'ProjectError' )
+        error = new ProjectServerError('could not find project');
+
+      return error.projectResponse;
     }
   }
 
