@@ -1,8 +1,8 @@
 'use strict';
 
-const repositoryWorker = require('./repository-worker');
-const SelectUserDataCreator = require('../../data/select-user-data');
-const userResponseWorker = require('../../data/user-response-worker');
+const repositoryWorker = require('./src/repository-worker');
+const SelectUserDataCreator = require('../data/select-user-data');
+const userResponseWorker = require('../data/user-response-worker');
 
 class SelectUser {
   async handler(workingData) {
@@ -17,7 +17,6 @@ class SelectUser {
     const accessID = workingData.getAccessID();
     const selectUserData = await this._getSelectUserDataFromRepository(accessID);
     const data = selectUserData.getSelectUserData();
-
     return userResponseWorker.createSuccessResponse(data);
   }
   async _getSelectUserDataFromRepository(accessID) {

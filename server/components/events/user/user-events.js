@@ -2,7 +2,7 @@
 
 const appEventsEmitter = require('../../application/data/app-events-emitter');
 const workingDataCreator = require('./src/working-data-creator');
-const selectUserEventHandler = require('../../user/select/user-select-event-handler');
+const selectUser = require('../../user/select/select-user');
 
 class UserEvents {
   initUserEvents() {
@@ -11,7 +11,7 @@ class UserEvents {
   }
   async _selectUserEventHandler(requestBody, responseCallback) {
     const workingData = workingDataCreator.createSelectUserWorkingData(requestBody);
-    const userResponse = await selectUserEventHandler(workingData);
+    const userResponse = await selectUser.handler(workingData);
     await responseCallback(userResponse);
   }
 }
