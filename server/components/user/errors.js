@@ -16,13 +16,13 @@ class UserError extends Error {
 class UserServerError extends UserError {
   constructor(message) {
     super(message);
-    this.userResponse = createErrorResponse('Server error', message);
+    this.userResponse = createErrorResponse('server', message);
   }
 }
 class UserDoesNotExist extends UserError {
   constructor(message) {
     super(message);
-    this.userResponse = createErrorResponse('Action error', message);
+    this.userResponse = createErrorResponse('action', message);
   }
 }
 

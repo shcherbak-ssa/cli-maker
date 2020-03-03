@@ -16,19 +16,19 @@ class ProjectError extends Error {
 class ProjectServerError extends ProjectError {
   constructor(message) {
     super(message);
-    this.projectResponse = createErrorResponse('Server error', message);
+    this.projectResponse = createErrorResponse('server', message);
   }
 }
 class ProjectDoesNotExist extends ProjectError {
   constructor(message) {
     super(message);
-    this.projectResponse = createErrorResponse('Action error', message);
+    this.projectResponse = createErrorResponse('action', message);
   }
 }
 class ProjectRulesError extends ProjectError {
   constructor(message) {
     super(message);
-    this.projectResponse = createErrorResponse('Rules error', message);
+    this.projectResponse = createErrorResponse('rule', message);
   }
 }
 
