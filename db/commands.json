@@ -1,0 +1,17 @@
+{
+  "1234567890/1": [
+    "command1.1",
+    "command1.2",
+    "command1.3"
+  ],
+  "1234567890/2": [
+    "command2.1",
+    "command2.2",
+    "command2.3"
+  ],
+  "1234567890/3": [
+    "command3.1",
+    "command3.2",
+    "command3.3"
+  ]
+}
