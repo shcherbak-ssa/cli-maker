@@ -18,9 +18,12 @@ class ParsedURL {
   getParamItem(key) {
     return this._data.params.get(key);
   }
-  parsePathname() {
+  getPathnameWithoutRoot() {
+    return this._data.pathname.slice(1);
+  }
+  getEventFromPathname() {
     const [, entity, event] = this._data.pathname.split('/');
-    return {entity, event: `${event}-${entity}`};
+    return `${event}-${entity}`;
   }
 }
 

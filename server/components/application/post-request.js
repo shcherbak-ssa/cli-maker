@@ -30,19 +30,25 @@ class PostRequest {
     else throw new InvalidUserError();
   }
   async _doValidUserAction(request, response) {
-    const {parsedPathname, body} = await this._parseRequest(request);
-    await bodyValidation.validate(parsedPathname.entity, body);
+    const {parsedURL, body} = await this._parseRequest(request);
+    await this._validateRequestBody(parsedURL, body);
 
     const requestBody = await requestBodyParser.createRequestBody(body);
-    const {event} = parsedPathname;
+    const event = parsedURL.getEventFromPathname();
 
     appEventsEmitter.emit(event, requestBody, this._getResponseCallback(response));
   }
   async _parseRequest(request) {
     const parsedURL = urlParser.parse(request.url);
-    const parsedPathname = parsedURL.parsePathname();
-    const body = await requestBodyParser.parse(request);
-    return {parsedPathname, body};
+    const body = await this._getBodyFromRequest(request);
+    return {parsedURL, body};
+  }
+  async _getBodyFromRequest(request) {
+    return await requestBodyParser.parse(request);
+  }
+  async _validateRequestBody(parsedURL, body) {
+    const pathname = parsedURL.getPathnameWithoutRoot();
+    await bodyValidation.validate(pathname, body);
   }
   _getResponseCallback(response) {
     return async (entityResponse) => {
