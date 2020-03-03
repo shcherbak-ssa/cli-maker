@@ -36,7 +36,7 @@ class PostRequest {
     const requestBody = await requestBodyParser.createRequestBody(body);
     const {event} = parsedPathname;
 
-    appEventsEmitter.emit(event, requestBody, this._responseCallback(response));
+    appEventsEmitter.emit(event, requestBody, this._getResponseCallback(response));
   }
   async _parseRequest(request) {
     const parsedURL = urlParser.parse(request.url);
@@ -44,7 +44,7 @@ class PostRequest {
     const body = await requestBodyParser.parse(request);
     return {parsedPathname, body};
   }
-  _responseCallback(response) {
+  _getResponseCallback(response) {
     return async (entityResponse) => {
       const jsonResponse = await responseCreator.createJSONResponse(entityResponse);
       await responseSender.send(jsonResponse, response);
