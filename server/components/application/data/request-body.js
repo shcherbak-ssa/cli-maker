@@ -1,8 +1,10 @@
 'use strict';
 
 class RequestBodyData {
-  accessID = '';
-  data = {};
+  constructor() {
+    this.accessID = '';
+    this.data = {};
+  }
 }
 
 class RequestBody {
