@@ -5,7 +5,7 @@ const button = document.getElementById('button');
 button.onclick = () => sendPostRequest();
 
 async function sendPostRequest() {
-  const response = await fetch('user/select', {
+  const response = await fetch('project/select', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'

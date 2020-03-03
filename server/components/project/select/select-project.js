@@ -5,7 +5,7 @@ const repositoryWorker = require('./src/repository-worker');
 const SelectProjectDataCreator = require('../data/select-project-data');
 
 class SelectProject {
-  handler(workingData) {
+  async handler(workingData) {
     try {
       return await this._tryToRunHandler(workingData);
     } catch (error) {
