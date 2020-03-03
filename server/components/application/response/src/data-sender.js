@@ -6,21 +6,18 @@ class DataSender {
   async sendSimpleResponse(simpleResponse, response) {
     await this._writeHead(simpleResponse, response);
     response.end();
-    console.log(`sent simple response: ${simpleResponse.getStatusCode()}`);
   }
   async sendFileResponse(fileResponse, response) {
     const filename = fileResponse.getFilename();
     await this._writeHead(fileResponse, response);
     await this._sendFile(filename, response);
     response.end();
-    console.log(`sent file: ${filename}`);
   }
   async sendJSONResponse(jsonResponse, response) {
     const jsonData = jsonResponse.getStringifyData();
     await this._writeHead(jsonResponse, response);
     response.write(jsonData);
     response.end();
-    console.log(`sent json: ${jsonData}`);
   }
 
   async _writeHead(responseObject, response) {
