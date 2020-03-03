@@ -16,7 +16,7 @@ class ProjectUseCase {
     } catch (error) {
       console.log(error);
       if( error.name !== 'ProjectError' )
-        error = new ProjectServerError(`could not to ${this._useCaseName} project`);
+        error = new ProjectServerError(`could not ${this._useCaseName} project`);
 
       return error.projectResponse;
     }
