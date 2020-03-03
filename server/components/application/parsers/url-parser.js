@@ -2,21 +2,19 @@
 
 const URL = require('url');
 const QUERYSTRING = require('querystring');
-
 const ParsedURLCreator = require('../data/parsed-url');
 
 class URLParser {
   parse(url) {
     const parsedURL = URL.parse(url);
-    const parsedURLCreator = new ParsedURLCreator();
-
     const pathname = this._getPathname(parsedURL);
-    parsedURLCreator.setPathname(pathname);
-
     const params = this._getParams(parsedURL);
-    parsedURLCreator.setParams(params);
+    const creator = new ParsedURLCreator();
 
-    return parsedURLCreator.getParsedURL();
+    return creator
+      .setPathname(pathname)
+      .setParams(params)
+      .getParsedURL();
   }
   
   _getPathname(parsedURL) {
