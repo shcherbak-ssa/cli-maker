@@ -1,7 +1,7 @@
 'use strict';
 
 const validationSchemas = {
-  'user/select': {
+  'select': {
     type: 'object'
   },
 };
