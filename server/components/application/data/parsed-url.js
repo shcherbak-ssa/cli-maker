@@ -1,8 +1,10 @@
 'use strict';
 
 class ParsedURLData {
-  pathname = '';
-  params = new Map();
+  constructor() {
+    this.pathname = '';
+    this.params = new Map();
+  }
 }
 
 class ParsedURL {
@@ -29,9 +31,11 @@ class ParsedURLCreator {
 
   setPathname(pathname) {
     this._data.pathname = pathname;
+    return this;
   }
   setParams(params) {
     this._data.params = params;
+    return this;
   }
   getParsedURL() {
     return new ParsedURL(this._data);
