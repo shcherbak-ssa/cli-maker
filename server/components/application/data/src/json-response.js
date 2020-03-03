@@ -38,6 +38,7 @@ class JSONResponseCreator extends SimpleResponseCreator {
 
   setData(data) {
     this._data.data = data;
+    return this;
   }
   getResponseData() {
     return new JSONResponse(this._data);

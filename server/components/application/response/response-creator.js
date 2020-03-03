@@ -5,7 +5,7 @@ const SUCCESS_STATUS_CODE = 200;
 
 const publicFilesController = require('./src/public-files-controller');
 const {NotFoundError, InternalSeverError} = require('../errors/request-errors');
-const {FileResponseCreator} = require('../data/response-creators');
+const {FileResponseCreator, JSONResponseCreator} = require('../data/response-creators');
 
 class ResponseCreator {
   
@@ -15,6 +15,15 @@ class ResponseCreator {
     } catch (error) {
       console.log(error);
       if( error.name === 'RequestError' ) throw error;
+      throw new InternalSeverError();
+    }
+  }
+  async createJSONResponse(entityResponse) {
+    try {
+      const responseData = entityResponse.getResponseData();
+      return await this._tryToCreateJSONResponse(responseData);
+    } catch (error) {
+      console.log(error);
       throw new InternalSeverError();
     }
   }
@@ -38,6 +47,14 @@ class ResponseCreator {
       .setFilename(filename);
 
     return creator.getResponseData();
+  }
+
+  async _tryToCreateJSONResponse(responseData) {
+    const creator = new JSONResponseCreator();
+    return creator
+      .setStatusCodeAndMessage(SUCCESS_STATUS_CODE)
+      .setData(responseData)
+      .getResponseData();
   }
 }
 

@@ -6,6 +6,7 @@ const urlParser = require('./parsers/url-parser');
 
 const usersController = require('../user/users/users-controller');
 const appEventsEmitter = require('./data/app-events-emitter');
+const responseCreator = require('./response/response-creator');
 const responseSender = require('./response/response-sender');
 
 const bodyValidation = require('./validation/body-validation');
@@ -48,8 +49,8 @@ class PostRequest {
   }
   _responseCallback(response) {
     return async (entityResponse) => {
-      console.log('entityResponse:', entityResponse);
-      response.end();
+      const jsonResponse = await responseCreator.createJSONResponse(entityResponse);
+      await responseSender.send(jsonResponse, response);
     }
   }
 }
