@@ -5,18 +5,17 @@ const UserResponseCreator = require('./src/user-response');
 class UserResponseWorker {
   createErrorResponse(type, message) {
     const creator = new UserResponseCreator();
-    
-    creator
+    return creator
       .setErrorFlag(true)
       .setType(type)
-      .setMessage(message);
-
-    return creator.getResponse();
+      .setMessage(message)
+      .getResponse();
   }
   createSuccessResponse(data) {
     const creator = new UserResponseCreator();
-    creator.setData(data);
-    return creator.getResponse();
+    return creator
+      .setData(data)
+      .getResponse();
   }
 }
 
