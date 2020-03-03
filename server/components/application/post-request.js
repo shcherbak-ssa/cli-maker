@@ -36,9 +36,6 @@ class PostRequest {
     const requestBody = await requestBodyParser.createRequestBody(body);
     const {event} = parsedPathname;
 
-    console.log('event: ', parsedPathname.event);
-    console.log('requestBody: ', requestBody);
-
     appEventsEmitter.emit(event, requestBody, this._responseCallback(response));
   }
   async _parseRequest(request) {
