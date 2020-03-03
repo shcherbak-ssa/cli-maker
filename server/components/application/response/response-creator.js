@@ -41,12 +41,11 @@ class ResponseCreator {
   }
   _createFileResponseObject({headers, filename}) {
     const creator = new FileResponseCreator();
-    creator
+    return creator
       .setStatusCodeAndMessage(SUCCESS_STATUS_CODE)
       .setHeaders(headers)
-      .setFilename(filename);
-
-    return creator.getResponseData();
+      .setFilename(filename)
+      .getResponseData();
   }
 
   async _tryToCreateJSONResponse(responseData) {
