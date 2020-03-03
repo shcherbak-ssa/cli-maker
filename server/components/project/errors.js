@@ -19,7 +19,14 @@ class ProjectServerError extends ProjectError {
     this.projectResponse = createErrorResponse('Server error', message);
   }
 }
+class ProjectDoesNotExist extends ProjectError {
+  constructor(message) {
+    super(message);
+    this.projectResponse = createErrorResponse('Action error', message);
+  }
+}
 
 module.exports = {
-  ProjectServerError
+  ProjectServerError,
+  ProjectDoesNotExist
 };
