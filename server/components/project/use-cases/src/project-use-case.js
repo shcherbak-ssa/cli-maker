@@ -27,7 +27,7 @@ class ProjectUseCase {
     await this._checkForComplianceRules(projectData);
 
     const accessID = workingData.getAccessID();
-    const data = await this._updateRepostiroy(accessID, projectData);
+    const data = await this._updateRepository(accessID, projectData);
 
     return projectResponseWorker.createSuccessResponse(data);
   }
@@ -35,8 +35,8 @@ class ProjectUseCase {
     const projectName = projectData.getName();
     await this._rules.check(projectName);
   }
-  async _updateRepostiroy(accessID, projectData) {
-    return await this._repository.updateRepostiroy(accessID, projectData);
+  async _updateRepository(accessID, projectData) {
+    return await this._repository.updateRepository(accessID, projectData);
   }
 }
 

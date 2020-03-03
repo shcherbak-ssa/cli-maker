@@ -18,7 +18,7 @@ class ProjectUseCaseRepositoryImpl {
       if( accessID in projectsDB ) {
         const projects = projectsDB[accessID];
         const projectName = projectData.getName();
-        const projectID = projects.length;
+        const projectID = projects.length + 1 + '';
 
         projects.push({ name: projectName, id: projectID });
         projectsDB[accessID] = [...projects];
@@ -45,8 +45,8 @@ class ProjectUseCaseRepositoryImpl {
         const projectName = projectData.getName();
 
         project.name = projectName;
-        projects = projects.map((item) => item.id === projectID ? project : item);
-        projectsDB[accessID] = [...projects];
+        const newProjects = projects.map((item) => item.id === projectID ? project : item);
+        projectsDB[accessID] = [...newProjects];
   
         return projectData;
       } else throw new ProjectUseCaseError('could not find user'); 

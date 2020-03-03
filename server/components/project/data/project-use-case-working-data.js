@@ -15,7 +15,7 @@ class ProjectUseCaseWorkingData {
   }
 
   getAccessID() {
-    return this._accessID;
+    return this._data.accessID;
   }
   getProjectData() {
     return this._data.data;

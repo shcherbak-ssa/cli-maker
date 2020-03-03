@@ -1,11 +1,11 @@
 'use strict';
 
-const button = document.getElementById('button');
+const selectUserButton = document.getElementById('select-user');
 
-button.onclick = () => sendPostRequest();
+selectUserButton.onclick = () => sendSelectUserRequest();
 
-async function sendPostRequest() {
-  const response = await fetch('project/select', {
+async function sendSelectUserRequest() {
+  const response = await fetch('user/select', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'

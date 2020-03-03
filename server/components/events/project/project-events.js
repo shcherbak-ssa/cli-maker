@@ -22,20 +22,20 @@ class ProjectEvents {
     await responseCallback(projectResponse);
   }
   async _createProjectEventHandler(requestBody, responseCallback) {
-    await this._useCaseEventHandler(createProject, requestBody, responseCallback);
+    await useCaseEventHandler(createProject, requestBody, responseCallback);
   }
   async _renameProjectEventHandler(requestBody, responseCallback) {
-    await this._useCaseEventHandler(renameProject, requestBody, responseCallback);
+    await useCaseEventHandler(renameProject, requestBody, responseCallback);
   }
   async _deleteProjectEventHandler(requestBody, responseCallback) {
-    await this._useCaseEventHandler(deleteProject, requestBody, responseCallback);
+    await useCaseEventHandler(deleteProject, requestBody, responseCallback);
   }
+}
 
-  async _useCaseEventHandler(useCase, requestBody, responseCallback) {
-    const workingData = workingDataCreator.createUseCaseWorkingData(requestBody);
-    const projectResponse = await useCase.runUseCase(workingData);
-    await responseCallback(projectResponse);
-  }
+async function useCaseEventHandler(useCase, requestBody, responseCallback) {
+  const workingData = workingDataCreator.createUseCaseWorkingData(requestBody);
+  const projectResponse = await useCase.runUseCase(workingData);
+  await responseCallback(projectResponse);
 }
 
 const projectEvents = new ProjectEvents();

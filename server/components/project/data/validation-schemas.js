@@ -28,7 +28,7 @@ const validationSchemas = {
       id: idFieldSchema
     }
   },
-  'create': {
+  'delete': {
     type: 'object',
     required: ['id'],
     properties: {
