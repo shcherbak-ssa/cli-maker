@@ -12,6 +12,7 @@ class UserEvents {
   async _selectUserEventHandler(requestBody, responseCallback) {
     const workingData = workingDataCreator.createSelectUserWorkingData(requestBody);
     const userResponse = await selectUser.handler(workingData);
+    console.log('userResponse:', userResponse);
     await responseCallback(userResponse);
   }
 }

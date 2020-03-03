@@ -2,10 +2,12 @@
 
 const usersDB = require('../../../db/users.json');
 const IUserRepository = require('../user/repository/i-user-repository');
+const {UserDoesNotExist} = require('../user/errors');
 
 class UserRepositoryImpl {
   async getUserData(accessID) {
-    return usersDB[accessID];
+    if( accessID in usersDB ) return usersDB[accessID];
+    else throw new UserDoesNotExist(`user with id ${accessID} doesn't exist`);
   }
 }
 

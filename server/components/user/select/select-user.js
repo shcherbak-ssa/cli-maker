@@ -3,6 +3,7 @@
 const repositoryWorker = require('./src/repository-worker');
 const SelectUserDataCreator = require('../data/select-user-data');
 const userResponseWorker = require('../data/user-response-worker');
+const {UserServerError} = require('../errors');
 
 class SelectUser {
   async handler(workingData) {
@@ -10,6 +11,10 @@ class SelectUser {
       return await this._tryToRunHandler(workingData);
     } catch (error) {
       console.log(error);
+      if( error.name !== 'UserError' )
+        error = new UserServerError('could not find user');
+      
+      return error.userResponse;
     }
   }
 
