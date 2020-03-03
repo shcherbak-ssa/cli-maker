@@ -1,7 +1,7 @@
 'use strict';
 
 const appEventsEmitter = require('../../application/data/app-events-emitter');
-const workingDataCreator = require();
+const workingDataCreator = require('./src/working-data-creator');
 const selectProject = require('../../project/select/select-project');
 
 class ProjectEvents {
