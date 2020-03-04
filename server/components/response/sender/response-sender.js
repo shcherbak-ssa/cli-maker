@@ -4,9 +4,9 @@ const {InternalSeverError} = require('../errors/request-errors');
 const dataSender = require('./src/data-sender');
 
 class ResponseSender {
-  async send(responseObject, response) {
+  async send(responseID, response) {
     try {
-      await this._tryToSend(responseObject, response);
+      await this._tryToSend(responseID, response);
     } catch(error) {
       console.log(error);
       await this.sendError(error, response);  
@@ -14,9 +14,9 @@ class ResponseSender {
   }
   async sendError(error, response) {
     try {
-      if( 'responseObject' in error ) {
-        const {responseObject} = error;
-        await this._tryToSend(responseObject, response);
+      if( 'responseID' in error ) {
+        const {responseID} = error;
+        await this._tryToSend(responseID, response);
       } else {
         throw new InternalSeverError();
       }
@@ -25,7 +25,7 @@ class ResponseSender {
     }
   }
 
-  async _tryToSend(responseObject, response) {
+  async _tryToSend(responseID, response) {
     const type = responseObject.getType();
     const sender = this._getSender(type).bind(dataSender);
     await sender(responseObject, response);
