@@ -6,6 +6,7 @@ const {NOT_FOUND_ERROR_PATH} = require('../../../utils/public-paths');
 class RequestError extends Error {
   constructor(message) {
     super(message);
+    this.isCustom = true;
     this.name = 'RequestError';
   }
 }

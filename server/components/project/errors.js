@@ -9,6 +9,7 @@ function createErrorResponse(type, message) {
 class ProjectError extends Error {
   constructor(message) {
     super(message);
+    this.isCustom = true;
     this.name = 'ProjectError';
   }
 }
