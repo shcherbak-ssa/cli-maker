@@ -3,18 +3,19 @@
 const projectIDSchema = require('./src/project-id-schema');
 
 const createProjectSchema = {
-  $merge: {
+  $patch: {
     source: {
       type: 'object',
+      required: ['name'],
       properties: {},
       additionalProperties: false,
       errorMessage: {
         additionalProperties: 'should not have properties other than \'id\''
       }
     },
-    with: {
+    with: [
       ...projectIDSchema
-    }
+    ]
   }
 };
 

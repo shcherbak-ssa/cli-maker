@@ -9,11 +9,6 @@ const {
 const projectIDSchema = [
   {
     op: 'add',
-    path: '/required',
-    value: 'id'
-  },
-  {
-    op: 'add',
     path: '/properties/id',
     value: {
       type: PROJECT_ID_TYPE,
