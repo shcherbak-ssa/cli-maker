@@ -10,9 +10,10 @@ class SelectUser {
     try {
       return await this._tryToRunHandler(workingData);
     } catch (error) {
-      console.log(error);
-      if( error.name !== 'UserError' )
+      if( error.name !== 'UserError' ) {
+        console.log(error);
         error = new UserServerError('could not find user');
+      }
       
       return error.userResponse;
     }
