@@ -6,23 +6,31 @@ const {
   PROJECT_NAME_PATTERN
 } = require('../../rules/project-name-rules');
 
-const projectNameSchema = {
-  required: ['name'],
-  properties: {
-    name: {
+const projectNameSchema = [
+  {
+    op: 'add',
+    path: '/required',
+    value: 'name'
+  },
+  {
+    op: 'add',
+    path: '/properties/name',
+    value: {
       type: PROJECT_NAME_TYPE,
       maxLength: MAX_PROJECT_NAME_LENGTH,
       pattern: PROJECT_NAME_PATTERN
     }
   },
-  errorMessage: {
-    require: {
-      name: 'cannot find the name field'
-    },
-    properties: {
-      name: `project name cannot exceed ${MAX_PROJECT_NAME_LENGTH} characters`
-    }
+  {
+    op: 'add',
+    path: '/errorMessage/required/name',
+    value: 'cannot find the name field'
+  },
+  {
+    op: 'add',
+    path: '/errorMessage/properties/name',
+    value: `project name cannot exceed ${MAX_PROJECT_NAME_LENGTH} characters`
   }
-};
+];
 
 module.exports = projectNameSchema;
