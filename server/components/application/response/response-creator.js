@@ -13,9 +13,11 @@ class ResponseCreator {
     try {
       return await this._tryToCreateFileResponse(pathname);
     } catch (error) {
-      console.log(error);
       if( error.name === 'RequestError' ) throw error;
-      throw new InternalSeverError();
+      else {
+        console.log(error);
+        throw new InternalSeverError();
+      }
     }
   }
   async createJSONResponse(entityResponse) {
@@ -23,7 +25,6 @@ class ResponseCreator {
       const responseData = entityResponse.getResponseData();
       return await this._tryToCreateJSONResponse(responseData);
     } catch (error) {
-      console.log(error);
       throw new InternalSeverError();
     }
   }

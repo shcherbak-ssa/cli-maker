@@ -17,7 +17,6 @@ class PostRequest {
     try {
       await this._tryToRun(request, response);
     } catch (error) {
-      console.log(error);
       await responseSender.sendError(error, response);
     }
   }
