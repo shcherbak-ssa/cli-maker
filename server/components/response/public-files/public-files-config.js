@@ -4,7 +4,7 @@ const {
   ROOT_PATH,
   JS_PUBLIC_PATH,
   IMAGES_PUBLIC_PATH
-} = require('../../../../utils/public-paths');
+} = require('../../../utils/public-paths');
 
 let publicFilesConfig = {
   '^\/$': {
