@@ -9,7 +9,4 @@ const errorMessages = {
   invalidSymbol: `project name may contains numbers, letters and symbols: - _`
 };
 
-module.exports = {
-  projectRules,
-  errorMessages
-};
+module.exports = projectRules;
