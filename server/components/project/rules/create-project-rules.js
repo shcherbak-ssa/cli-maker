@@ -19,7 +19,7 @@ class CreateProjectRules {
     return projectName.length > this._maxProjectNameLength;
   }
   _isContainsInvalidSymbols(projectName) {
-    return this._invalidSymbols.test(projectName);
+    return !this._invalidSymbols.test(projectName);
   }
 }
 
