@@ -1,6 +1,7 @@
 'use strict';
 
 const {InternalSeverError} = require('../errors/request-errors');
+const responseCache = require('../cache');
 const dataSender = require('./src/data-sender');
 
 class ResponseSender {
@@ -26,6 +27,7 @@ class ResponseSender {
   }
 
   async _tryToSend(responseID, response) {
+    const responseObject = responseCache.getResponseObject(responseID);
     const type = responseObject.getType();
     const sender = this._getSender(type).bind(dataSender);
     await sender(responseObject, response);
