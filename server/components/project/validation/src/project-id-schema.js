@@ -6,7 +6,7 @@ const {
   PROJECT_ID_PATTERN
 } = require('../../rules/project-id-rules');
 
-const projectNameSchema = {
+const projectIDSchema = {
   required: ['id'],
   properties: {
     id: {
@@ -22,4 +22,4 @@ const projectNameSchema = {
   }
 };
 
-module.exports = projectNameSchema;
+module.exports = projectIDSchema;
