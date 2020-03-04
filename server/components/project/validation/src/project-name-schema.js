@@ -7,7 +7,7 @@ const {
 } = require('../../rules/project-name-rules');
 
 const projectNameSchema = {
-  require: ['name'],
+  required: ['name'],
   properties: {
     name: {
       type: PROJECT_NAME_TYPE,
