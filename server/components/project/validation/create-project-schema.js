@@ -1,6 +1,6 @@
 'use strict';
 
-const projectIDSchema = require('./src/project-id-schema');
+const projectNameSchema = require('./src/project-name-schema');
 
 const createProjectSchema = {
   $patch: {
@@ -14,7 +14,7 @@ const createProjectSchema = {
       }
     },
     with: [
-      ...projectIDSchema
+      ...projectNameSchema
     ]
   }
 };
