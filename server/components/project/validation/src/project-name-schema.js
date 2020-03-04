@@ -23,8 +23,10 @@ const projectNameSchema = [
   },
   {
     op: 'add',
-    path: '/errorMessage/required/name',
-    value: 'cannot find the name field'
+    path: '/errorMessage/required',
+    value: {
+      name: 'cannot find the name field'
+    }
   },
   {
     op: 'add',
