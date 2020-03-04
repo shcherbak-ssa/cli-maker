@@ -10,9 +10,10 @@ class SelectProject {
     try {
       return await this._tryToRunHandler(workingData);
     } catch (error) {
-      console.log(error);
-      if( error.name !== 'ProjectError' )
+      if( error.name !== 'ProjectError' ) {
+        console.log(error);
         error = new ProjectServerError('could not find project');
+      }
 
       return error.projectResponse;
     }

@@ -14,9 +14,10 @@ class ProjectUseCase {
     try {
       return await this._tryToRunUseCase(workingData);
     } catch (error) {
-      console.log(error);
-      if( error.name !== 'ProjectError' )
+      if( error.name !== 'ProjectError' ) {
+        console.log(error);
         error = new ProjectServerError(`could not ${this._useCaseName} project`);
+      }
 
       return error.projectResponse;
     }
