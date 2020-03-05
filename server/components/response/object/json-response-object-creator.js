@@ -5,16 +5,16 @@ const JSONResponseCreator = require('./src/json-response');
 
 class JSONResponseObjectCreator {
   
-  async createJSONResponse(entityResponse) {
+  async create(entityResponse) {
     try {
       const responseData = entityResponse.getResponseData();
-      return await this._tryToCreateJSONResponse(responseData);
+      return await this._tryToCreate(responseData);
     } catch (error) {
       throw new InternalSeverError();
     }
   }
 
-  async _tryToCreateJSONResponse(responseData) {
+  async _tryToCreate(responseData) {
     const creator = new JSONResponseCreator();
     return creator
       .setStatusCodeAndMessage(SUCCESS_STATUS_CODE)

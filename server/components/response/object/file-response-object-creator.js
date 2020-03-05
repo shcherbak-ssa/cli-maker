@@ -6,9 +6,9 @@ const FileResponseCreator = require('./src/file-response');
 
 class FileResponseObjectCreator {
 
-  async createFileResponse(statusCode, pathname) {
+  async create(statusCode, pathname) {
     try {
-      return await this._tryToCreateFileResponse(statusCode, pathname);
+      return await this._tryToCreate(statusCode, pathname);
     } catch (error) {
       if( error.name === 'RequestError' ) throw error;
       else {
@@ -18,7 +18,7 @@ class FileResponseObjectCreator {
     }
   }
 
-  async _tryToCreateFileResponse(statusCode, pathname) {
+  async _tryToCreate(statusCode, pathname) {
     const publicFileConfig = await publicFilesController.getPublicFileConfig(pathname);
     if( this._isFileExist(publicFileConfig.filename) )
       return this._createFileResponseObject(statusCode, publicFileConfig);

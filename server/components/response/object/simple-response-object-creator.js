@@ -3,7 +3,7 @@
 const {SimpleResponseCreator} = require('./src/simple-response');
 
 class SimpleResponseObjectCreator {
-  async createSimpleResponse(statusCode) {
+  async create(statusCode) {
     const creator = new SimpleResponseCreator();
     return creator
       .setStatusCodeAndMessage(statusCode)
