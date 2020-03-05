@@ -2,7 +2,7 @@
 
 const EntityResponseCreator = require('./entity-response');
 
-function createErrorResponse(type, message) {
+function createErrorEntityResponse(type, message) {
   const creator = new EntityResponseCreator();
   return creator
     .setErrorFlag(true)
@@ -11,4 +11,4 @@ function createErrorResponse(type, message) {
     .getResponse();
 }
 
-module.exports = createErrorResponse;
+module.exports = createErrorEntityResponse;
