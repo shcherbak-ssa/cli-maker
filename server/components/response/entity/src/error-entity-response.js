@@ -5,16 +5,16 @@ const EntityResponseCreator = require('./entity-response');
 const jsonResponseObjectCreator = require('../../object/json-response-object-creator');
 
 class ErrorEntityResponse {
-  async create(data, responseType) {
+  async create(type, message) {
     try {
-      return await this._tryToCreate(data, responseType);
+      return await this._tryToCreate(type, message);
     } catch (error) {
       console.log(error);
     }
   }
 
-  async _tryToCreate(data, responseType) {
-    const entityResponse = this._createEntityResponse(data);
+  async _tryToCreate(type, message) {
+    const entityResponse = this._createEntityResponse(type, message);
     const responseObject = await this._createResponseObject(entityResponse);
     const responseID = this._saveResponseObjectInCache(responseObject);
     return responseID;
