@@ -2,10 +2,14 @@
 
 const errorEntityResponse = require('./src/error-entity-response');
 
-async function createErrorResponse(type, message) {
-  return await errorEntityResponse.create(type, message);
+class ErrorResponseImpl {
+  async create(type, message) {
+    return await errorEntityResponse.create(type, message);
+  }
 }
 
-function implementErrorResponses() {}
+function implementErrorResponses() {
+  const errorResponseImpl = new ErrorResponseImpl();
+}
 
 module.exports = implementErrorResponses;
