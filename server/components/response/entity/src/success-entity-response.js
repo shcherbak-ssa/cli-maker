@@ -2,11 +2,11 @@
 
 const EntityResponseCreator = require('./entity-response');
 
-function createSuccessResponse(data) {
+function createSuccessEntityResponse(data) {
   const creator = new EntityResponseCreator();
     return creator
       .setData(data)
       .getResponse();
 }
 
-module.exports = createSuccessResponse;
+module.exports = createSuccessEntityResponse;
