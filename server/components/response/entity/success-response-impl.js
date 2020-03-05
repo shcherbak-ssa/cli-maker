@@ -2,10 +2,14 @@
 
 const successEntityResponse = require('./src/success-entity-response');
 
-async function createSuccessResponse(data, responseType) {
-  return await successEntityResponse.create(data, responseType);
+class SuccessResponseImpl {
+  async create(data, responseType) {
+    return await successEntityResponse.create(data, responseType);
+  }
 }
 
-function implementSuccessResponses() {}
+function implementSuccessResponses() {
+  const successResponseImpl = new SuccessResponseImpl();
+}
 
 module.exports = implementSuccessResponses;
