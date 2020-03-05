@@ -15,9 +15,8 @@ class SuccessEntityResponse {
 
   async _tryToCreate(data, responseType) {
     const entityResponse = this._createEntityResponse(data);
-    const responseObjectCreator = this._getResponseObjectCreator(responseType);
-    const responseObject = await responseObjectCreator.create(entityResponse);
-    const responseID = this._saveResponseObject(responseObject);
+    const responseObject = await this._createResponseObject(responseType, entityResponse);
+    const responseID = this._saveResponseObjectInCache(responseObject);
     return responseID;
   }
   _createEntityResponse(data) {
@@ -26,15 +25,15 @@ class SuccessEntityResponse {
         .setData(data)
         .getResponse();
   }
-  _getResponseObjectCreator(responseType) {
+  async _createResponseObject(responseType, entityResponse) {
     switch(responseType) {
       case 'json':
-        return jsonResponseObjectCreator;
+        return jsonResponseObjectCreator.create(entityResponse);
       case 'file':
         return '';
     }
   }
-  _saveResponseObject(responseObject) {
+  _saveResponseObjectInCache(responseObject) {
     return responseCache.addResponseObject(responseObject);
   }
 }
