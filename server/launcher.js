@@ -1,6 +1,8 @@
 'use strict';
 
-const AppServer = require('./components/application/server');
+const cliMakerConfig = require('../cli-maker.config.json');
+const AppServer = require('./server');
+
 const initUserComponent = require('./components/user/launcher');
 const initProjectComponent = require('./components/project/launcher');
 const initRepositoryComponent = require('./components/repository/launcher');
@@ -31,4 +33,5 @@ class AppLauncher {
   }
 }
 
-module.exports = AppLauncher;
+const appLauncher = new AppLauncher();
+appLauncher.initApplication(cliMakerConfig);
